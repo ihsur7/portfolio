@@ -1,12 +1,230 @@
-<!-- hello world -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <h1>Hello World</h1>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rushi — Creative Developer</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav__brand">
+            <span class="nav__logo">R</span>
+            <span class="nav__name">RUSHI</span>
+        </div>
+        <div class="nav__links">
+            <a href="#work" class="nav__link">WORK</a>
+            <a href="#about" class="nav__link">ABOUT</a>
+            <a href="#contact" class="nav__link">CONTACT</a>
+        </div>
+        <div class="nav__toggle" id="navToggle">
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero__background">
+            <div class="hero__grid"></div>
+        </div>
+        <div class="hero__content">
+            <div class="hero__text">
+                <h1 class="hero__title">
+                    <span class="hero__title-line">CREATIVE</span>
+                    <span class="hero__title-line hero__title-line--accent">DEVELOPER</span>
+                </h1>
+                <p class="hero__subtitle">
+                    Crafting digital experiences where 
+                    <span class="text-accent">Swiss precision</span> meets 
+                    <span class="text-accent">modern innovation</span>
+                </p>
+            </div>
+            <div class="hero__cta">
+                <a href="#work" class="btn btn--primary">VIEW WORK</a>
+                <a href="#contact" class="btn btn--secondary">GET IN TOUCH</a>
+            </div>
+        </div>
+        <div class="hero__scroll">
+            <span class="hero__scroll-text">SCROLL</span>
+            <div class="hero__scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section class="work" id="work">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">SELECTED WORK</h2>
+                <div class="section-number">01</div>
+            </div>
+            
+            <div class="work__grid">
+                <article class="work__item" data-category="web">
+                    <div class="work__item-visual">
+                        <div class="work__item-image"></div>
+                        <div class="work__item-overlay">
+                            <span class="work__item-tech">REACT / TYPESCRIPT</span>
+                        </div>
+                    </div>
+                    <div class="work__item-content">
+                        <h3 class="work__item-title">E-COMMERCE PLATFORM</h3>
+                        <p class="work__item-description">Modern shopping experience with advanced filtering and seamless checkout flow</p>
+                        <div class="work__item-tags">
+                            <span class="tag">FRONTEND</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="work__item" data-category="app">
+                    <div class="work__item-visual">
+                        <div class="work__item-image"></div>
+                        <div class="work__item-overlay">
+                            <span class="work__item-tech">REACT NATIVE</span>
+                        </div>
+                    </div>
+                    <div class="work__item-content">
+                        <h3 class="work__item-title">FINTECH MOBILE APP</h3>
+                        <p class="work__item-description">Investment tracking app with real-time data visualization and portfolio analytics</p>
+                        <div class="work__item-tags">
+                            <span class="tag">MOBILE</span>
+                            <span class="tag">FINTECH</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="work__item" data-category="design">
+                    <div class="work__item-visual">
+                        <div class="work__item-image"></div>
+                        <div class="work__item-overlay">
+                            <span class="work__item-tech">FIGMA / PROTOTYPING</span>
+                        </div>
+                    </div>
+                    <div class="work__item-content">
+                        <h3 class="work__item-title">BRAND IDENTITY SYSTEM</h3>
+                        <p class="work__item-description">Complete visual identity and design system for emerging tech startup</p>
+                        <div class="work__item-tags">
+                            <span class="tag">BRANDING</span>
+                            <span class="tag">DESIGN</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">ABOUT</h2>
+                <div class="section-number">02</div>
+            </div>
+            
+            <div class="about__content">
+                <div class="about__text">
+                    <p class="about__paragraph about__paragraph--large">
+                        I'm a creative developer passionate about building digital experiences that matter.
+                    </p>
+                    <p class="about__paragraph">
+                        With a background in both design and development, I bridge the gap between beautiful interfaces and robust functionality. My approach combines Swiss design principles with modern web technologies to create solutions that are both visually striking and highly functional.
+                    </p>
+                    <p class="about__paragraph">
+                        When I'm not coding, you'll find me exploring new design trends, contributing to open source projects, or experimenting with emerging technologies.
+                    </p>
+                </div>
+                
+                <div class="about__skills">
+                    <h3 class="about__skills-title">TECHNICAL EXPERTISE</h3>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">FRONTEND</h4>
+                            <ul class="skill-list">
+                                <li>React / Next.js</li>
+                                <li>TypeScript</li>
+                                <li>Vue.js</li>
+                                <li>CSS3 / Sass</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">BACKEND</h4>
+                            <ul class="skill-list">
+                                <li>Node.js</li>
+                                <li>Python</li>
+                                <li>PostgreSQL</li>
+                                <li>MongoDB</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">DESIGN</h4>
+                            <ul class="skill-list">
+                                <li>Figma</li>
+                                <li>Adobe Creative Suite</li>
+                                <li>Prototyping</li>
+                                <li>Design Systems</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">CONTACT</h2>
+                <div class="section-number">03</div>
+            </div>
+            
+            <div class="contact__content">
+                <div class="contact__text">
+                    <h3 class="contact__heading">LET'S WORK TOGETHER</h3>
+                    <p class="contact__description">
+                        Have a project in mind? I'm always interested in discussing new opportunities and creative challenges.
+                    </p>
+                </div>
+                
+                <div class="contact__info">
+                    <div class="contact__item">
+                        <span class="contact__label">EMAIL</span>
+                        <a href="mailto:hello@rushi.dev" class="contact__link">hello@rushi.dev</a>
+                    </div>
+                    <div class="contact__item">
+                        <span class="contact__label">SOCIAL</span>
+                        <div class="contact__social">
+                            <a href="#" class="contact__social-link">LINKEDIN</a>
+                            <a href="#" class="contact__social-link">GITHUB</a>
+                            <a href="#" class="contact__social-link">TWITTER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__copy">
+                    <span>© 2025 RUSHI</span>
+                    <span>CREATIVE DEVELOPER</span>
+                </div>
+                <div class="footer__links">
+                    <a href="#" class="footer__link">PRIVACY</a>
+                    <a href="#" class="footer__link">IMPRINT</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
 </html>
