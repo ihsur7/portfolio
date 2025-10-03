@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Use IBM Plex Sans and IBM Plex Mono for a refined UI/terminal pairing -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&family=IBM+Plex+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Cursor follower -->
-    <div class="cursor-follower"></div>
-    
     <!-- System container -->
     <div class="system-container">
         <!-- Left command rail -->
@@ -48,15 +46,19 @@
             </nav>
             
             <div class="rail-footer">
-                <div class="system-info">
-                    <div class="info-line">
-                        <span class="info-label">CPU:</span>
-                        <div class="info-bar"><div class="info-fill" style="width: 45%"></div></div>
-                    </div>
-                    <div class="info-line">
-                        <span class="info-label">MEM:</span>
-                        <div class="info-bar"><div class="info-fill" style="width: 67%"></div></div>
-                    </div>
+                <div class="rail-quick-links" aria-label="Quick links">
+                    <a class="quick-link" href="https://x.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="X profile">
+                        <span class="quick-icon">🐦</span>
+                        <span class="quick-label">X</span>
+                    </a>
+                    <a class="quick-link" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                        <span class="quick-icon">💼</span>
+                        <span class="quick-label">LinkedIn</span>
+                    </a>
+                    <a class="quick-link" href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                        <span class="quick-icon">⚡</span>
+                        <span class="quick-label">GitHub</span>
+                    </a>
                 </div>
                 <div class="rail-version">v2.0.25</div>
             </div>
@@ -101,14 +103,23 @@
                             
                             <div class="stats-grid">
                                 <div class="stat-box">
+                                    <div class="stat-indicator">
+                                        <span class="stat-dot"></span>
+                                    </div>
                                     <div class="stat-value">5+</div>
                                     <div class="stat-label">YEARS_EXP</div>
                                 </div>
                                 <div class="stat-box">
+                                    <div class="stat-indicator">
+                                        <span class="stat-dot"></span>
+                                    </div>
                                     <div class="stat-value">50+</div>
                                     <div class="stat-label">PROJECTS</div>
                                 </div>
                                 <div class="stat-box">
+                                    <div class="stat-indicator">
+                                        <span class="stat-dot"></span>
+                                    </div>
                                     <div class="stat-value">30+</div>
                                     <div class="stat-label">CLIENTS</div>
                                 </div>
@@ -122,82 +133,551 @@
                     <div class="panel-main">
                         <div class="panel-header">
                             <h2 class="panel-title">CORE_CAPABILITIES</h2>
-                            <div class="panel-subtitle">// Technical Stack</div>
+                            <div class="panel-subtitle">// Technical Competencies</div>
                         </div>
                         
                         <div class="panel-content">
-                            <div class="skills-grid">
-                                <div class="skill-category">
-                                    <div class="category-header">
-                                        <span class="category-icon">[FE]</span>
-                                        <span class="category-title">FRONTEND</span>
-                                    </div>
-                                    <div class="skill-list">
-                                        <div class="skill-item">
-                                            <span class="skill-name">React.js</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 90%"></div></div>
+                            <!-- Languages Category -->
+                            <div class="skill-category-wrapper">
+                                <div class="category-title-bar">
+                                    <span class="category-icon">◆</span>
+                                    <span class="category-name">LANGUAGES</span>
+                                    <div class="category-divider"></div>
+                                    <span class="category-count">5 ACTIVE</span>
+                                </div>
+                                <div class="skill-cards-grid">
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
+                                            <span class="skill-name">JavaScript</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
                                         </div>
-                                        <div class="skill-item">
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 5 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Built 30+ production apps. Recent: Real-time trading platform serving 50K users.</p>
+                                            <div class="hover-projects">→ 15 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
                                             <span class="skill-name">TypeScript</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">Next.js</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 88%"></div></div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 4 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">CSS/SCSS</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 92%"></div></div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Type-safe enterprise apps. Reduced runtime errors by 70% across codebase.</p>
+                                            <div class="hover-projects">→ 12 projects tagged</div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="skill-category">
-                                    <div class="category-header">
-                                        <span class="category-icon">[BE]</span>
-                                        <span class="category-title">BACKEND</span>
-                                    </div>
-                                    <div class="skill-list">
-                                        <div class="skill-item">
-                                            <span class="skill-name">Node.js</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 87%"></div></div>
-                                        </div>
-                                        <div class="skill-item">
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
                                             <span class="skill-name">Python</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">PostgreSQL</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 83%"></div></div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2024
+                                            </span>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">MongoDB</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Data pipelines & ML models. Recent: Prediction engine with 92% accuracy.</p>
+                                            <div class="hover-projects">→ 8 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
+                                            <span class="skill-name">HTML/CSS</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 6 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Pixel-perfect UIs. Specialized in modern CSS (Grid, Flexbox, Animations).</p>
+                                            <div class="hover-projects">→ 40+ projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="intermediate">
+                                        <div class="card-header">
+                                            <span class="skill-name">SQL</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">INTERMEDIATE</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Complex queries & optimization. Reduced query time by 60% on high-traffic DB.</p>
+                                            <div class="hover-projects">→ 10 projects tagged</div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="skill-category">
-                                    <div class="category-header">
-                                        <span class="category-icon">[DV]</span>
-                                        <span class="category-title">DEVOPS</span>
+                            </div>
+                            
+                            <!-- Frameworks Category -->
+                            <div class="skill-category-wrapper">
+                                <div class="category-title-bar">
+                                    <span class="category-icon">◆</span>
+                                    <span class="category-name">FRAMEWORKS</span>
+                                    <div class="category-divider"></div>
+                                    <span class="category-count">6 ACTIVE</span>
+                                </div>
+                                <div class="skill-cards-grid">
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
+                                            <span class="skill-name">React</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 4 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>SPAs with advanced patterns (hooks, context, suspense). Built design systems.</p>
+                                            <div class="hover-projects">→ 20 projects tagged</div>
+                                        </div>
                                     </div>
-                                    <div class="skill-list">
-                                        <div class="skill-item">
-                                            <span class="skill-name">Docker</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 78%"></div></div>
+                                    
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
+                                            <span class="skill-name">Next.js</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">AWS</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
                                         </div>
-                                        <div class="skill-item">
-                                            <span class="skill-name">CI/CD</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Full-stack apps with SSR/SSG. E-commerce site achieving 98+ Lighthouse score.</p>
+                                            <div class="hover-projects">→ 12 projects tagged</div>
                                         </div>
-                                        <div class="skill-item">
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">Node.js</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 4 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>RESTful APIs & microservices. Built scalable backend handling 10K req/min.</p>
+                                            <div class="hover-projects">→ 15 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">Express</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 4 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Custom middleware & authentication systems. Secured APIs for fintech apps.</p>
+                                            <div class="hover-projects">→ 14 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="intermediate">
+                                        <div class="card-header">
+                                            <span class="skill-name">Vue.js</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 2 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2024
+                                            </span>
+                                        </div>
+                                        <div class="card-level">INTERMEDIATE</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Component-based apps. Built admin dashboard with Vuex state management.</p>
+                                            <div class="hover-projects">→ 5 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="intermediate">
+                                        <div class="card-header">
+                                            <span class="skill-name">TailwindCSS</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 2 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Rapid UI development. Custom design systems with utility-first approach.</p>
+                                            <div class="hover-projects">→ 10 projects tagged</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tools Category -->
+                            <div class="skill-category-wrapper">
+                                <div class="category-title-bar">
+                                    <span class="category-icon">◆</span>
+                                    <span class="category-name">TOOLS & PLATFORMS</span>
+                                    <div class="category-divider"></div>
+                                    <span class="category-count">8 ACTIVE</span>
+                                </div>
+                                <div class="skill-cards-grid">
+                                    <div class="skill-card" data-level="expert">
+                                        <div class="card-header">
                                             <span class="skill-name">Git</span>
-                                            <div class="skill-bar"><div class="skill-fill" style="width: 93%"></div></div>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 5 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">EXPERT</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Version control expert. Complex merge strategies, rebasing, workflow automation.</p>
+                                            <div class="hover-projects">→ Daily usage</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">Docker</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Containerized apps. Multi-stage builds, docker-compose orchestration.</p>
+                                            <div class="hover-projects">→ 12 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">AWS</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Cloud infrastructure (EC2, S3, Lambda, RDS). Deployed scalable architectures.</p>
+                                            <div class="hover-projects">→ 10 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">MongoDB</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 4 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>NoSQL database design. Aggregation pipelines, indexing strategies.</p>
+                                            <div class="hover-projects">→ 13 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">PostgreSQL</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2024
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Relational DB design. Complex joins, transactions, performance tuning.</p>
+                                            <div class="hover-projects">→ 8 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="intermediate">
+                                        <div class="card-header">
+                                            <span class="skill-name">Figma</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">INTERMEDIATE</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>UI/UX design. Prototyping, component systems, design-to-code workflow.</p>
+                                            <div class="hover-projects">→ 25 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="advanced">
+                                        <div class="card-header">
+                                            <span class="skill-name">CI/CD</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 3 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2025
+                                            </span>
+                                        </div>
+                                        <div class="card-level">ADVANCED</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>Automated pipelines (GitHub Actions, Jenkins). Reduced deploy time by 80%.</p>
+                                            <div class="hover-projects">→ 10 projects tagged</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="skill-card" data-level="intermediate">
+                                        <div class="card-header">
+                                            <span class="skill-name">GraphQL</span>
+                                            <div class="skill-status">
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot active"></span>
+                                                <span class="status-dot"></span>
+                                                <span class="status-dot"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <span class="meta-label">EXP:</span> 2 years
+                                            </span>
+                                            <span class="meta-divider">|</span>
+                                            <span class="meta-item">
+                                                <span class="meta-label">LAST:</span> 2024
+                                            </span>
+                                        </div>
+                                        <div class="card-level">INTERMEDIATE</div>
+                                        <div class="card-hover-content">
+                                            <div class="hover-title">// CASE_STUDY</div>
+                                            <p>API development. Schema design, resolvers, Apollo implementation.</p>
+                                            <div class="hover-projects">→ 4 projects tagged</div>
                                         </div>
                                     </div>
                                 </div>

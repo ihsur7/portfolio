@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function initSystem() {
     initClock();
     initNavigation();
-    initCursorFollower();
     initContactPanel();
     initScrollAnimations();
     initFormHandler();
@@ -61,6 +60,14 @@ function initNavigation() {
             item.classList.add('active');
             const activeStatus = item.querySelector('.nav-status');
             if (activeStatus) activeStatus.textContent = '●';
+
+            // Update mobile bottom tabbar active state if present
+            const tabBtns = document.querySelectorAll('.bottom-tabbar .tab-btn');
+            if (tabBtns) {
+                tabBtns.forEach(b => {
+                    b.classList.toggle('active', b.getAttribute('data-section') === targetSection);
+                });
+            }
             
             // Switch sections with animation
             sections.forEach(section => {
@@ -69,77 +76,23 @@ function initNavigation() {
             
             const targetElement = document.getElementById(targetSection);
             if (targetElement) {
-                // Add slight delay for smooth transition
                 setTimeout(() => {
                     targetElement.classList.add('active');
                     
-                    // Trigger skill bar animations in skills section
+                    // Trigger animations based on section
                     if (targetSection === 'skills') {
-                        animateSkillBars();
+                        initMagneticHover();
                     }
                 }, 50);
             }
-            
-            // Add system sound effect (optional - uncomment if you want audio)
-            // playSystemSound();
         });
     });
 }
 
-// ===== SKILL BARS ANIMATION =====
-function animateSkillBars() {
-    const skillFills = document.querySelectorAll('.skill-fill');
-    skillFills.forEach((fill, index) => {
-        const width = fill.style.width;
-        fill.style.width = '0%';
-        setTimeout(() => {
-            fill.style.width = width;
-        }, index * 50);
-    });
-}
+// ===== SKILL BARS ANIMATION (REMOVED) =====
+// Skills now use card-based system
 
-// ===== CURSOR FOLLOWER =====
-function initCursorFollower() {
-    const follower = document.querySelector('.cursor-follower');
-    let mouseX = 0;
-    let mouseY = 0;
-    let followerX = 0;
-    let followerY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    
-    // Smooth follow animation
-    function animate() {
-        const speed = 0.15;
-        
-        followerX += (mouseX - followerX) * speed;
-        followerY += (mouseY - followerY) * speed;
-        
-        follower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px)`;
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-    
-    // Interactive elements cursor effects
-    const interactiveElements = document.querySelectorAll('a, button, .nav-item, .project-card, .stat-box, .contact-link');
-    
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            follower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px) scale(1.5)`;
-            follower.style.borderColor = 'var(--color-accent)';
-        });
-        
-        element.addEventListener('mouseleave', () => {
-            follower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px) scale(1)`;
-            follower.style.borderColor = 'var(--color-accent)';
-        });
-    });
-}
+
 
 // ===== CONTACT PANEL =====
 function initContactPanel() {
@@ -261,8 +214,38 @@ function initFormHandler() {
 }
 
 // ===== HOVER SHADOW EFFECTS =====
+// Magnetic hover effect for skill cards
+function initMagneticHover() {
+    const skillCards = document.querySelectorAll('.skill-card');
+    
+    skillCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const deltaX = (x - centerX) / centerX;
+            const deltaY = (y - centerY) / centerY;
+            
+            // Magnetic pull effect (subtle)
+            const moveX = deltaX * 8;
+            const moveY = deltaY * 8;
+            
+            card.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-4px)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+// 3D tilt effect for other cards
 document.addEventListener('mousemove', (e) => {
-    const cards = document.querySelectorAll('.project-card, .stat-box, .skill-category, .timeline-item');
+    const cards = document.querySelectorAll('.project-card, .stat-box, .timeline-item');
     
     cards.forEach(card => {
         const rect = card.getBoundingClientRect();
@@ -273,11 +256,18 @@ document.addEventListener('mousemove', (e) => {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            const angleX = (y - centerY) / 20;
-            const angleY = (centerX - x) / 20;
+            const angleX = (y - centerY) / 15;
+            const angleY = (centerX - x) / 15;
             
-            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-5px)`;
-            card.style.boxShadow = `${(x - centerX) / 5}px ${(y - centerY) / 5}px 30px rgba(0, 217, 255, 0.2)`;
+            // Replace 3D tilt with a subtle 2D translate and a dynamic shadow
+            const moveX = (x - centerX) / 30; // small horizontal nudge
+            const moveY = (y - centerY) / 30; // small vertical nudge
+            card.style.transform = `translate(${moveX}px, ${moveY - 4}px)`;
+
+            // Dynamic shadow based on cursor position (2D)
+            const shadowX = (x - centerX) / 10;
+            const shadowY = (y - centerY) / 10;
+            card.style.boxShadow = `${shadowX}px ${shadowY}px 24px rgba(0, 217, 255, 0.12)`;
         } else {
             card.style.transform = '';
             card.style.boxShadow = '';
@@ -286,12 +276,15 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Reset transforms when mouse leaves cards
-document.querySelectorAll('.project-card, .stat-box, .skill-category, .timeline-item').forEach(card => {
+document.querySelectorAll('.project-card, .stat-box, .timeline-item').forEach(card => {
     card.addEventListener('mouseleave', () => {
         card.style.transform = '';
         card.style.boxShadow = '';
     });
 });
+
+// Initialize magnetic hover on page load for visible skill cards
+initMagneticHover();
 
 // ===== SYSTEM SOUND EFFECTS (OPTIONAL) =====
 function playOpenSound() {
@@ -346,24 +339,7 @@ function activateEasterEgg() {
     console.log('🎮 SYSTEM ACCESS GRANTED - DEVELOPER MODE ACTIVATED');
 }
 
-// ===== DYNAMIC SYSTEM INFO (CPU/MEM BARS) =====
-function updateSystemInfo() {
-    const cpuFill = document.querySelector('.info-line:nth-child(1) .info-fill');
-    const memFill = document.querySelector('.info-line:nth-child(2) .info-fill');
-    
-    if (cpuFill && memFill) {
-        // Simulate fluctuating system resources
-        setInterval(() => {
-            const cpuValue = 30 + Math.random() * 40;
-            const memValue = 50 + Math.random() * 30;
-            
-            cpuFill.style.width = `${cpuValue}%`;
-            memFill.style.width = `${memValue}%`;
-        }, 2000);
-    }
-}
-
-updateSystemInfo();
+// Dynamic system info removed (CPU/MEM bars)
 
 // ===== PROJECT CARD INTERACTIONS =====
 document.querySelectorAll('.project-card').forEach(card => {
@@ -425,46 +401,50 @@ console.log(`
 `);
 
 // ===== MOBILE MENU TOGGLE (FOR RESPONSIVE) =====
-function initMobileMenu() {
-    // Add mobile menu button if viewport is small
-    if (window.innerWidth <= 768) {
-        const dashboard = document.querySelector('.dashboard');
-        const rail = document.querySelector('.command-rail');
-        
-        if (dashboard && rail && !document.querySelector('.mobile-menu-btn')) {
-            const menuBtn = document.createElement('button');
-            menuBtn.className = 'mobile-menu-btn';
-            menuBtn.innerHTML = '☰';
-            menuBtn.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 101;
-                background: var(--color-accent);
-                border: none;
-                color: var(--color-bg);
-                width: 45px;
-                height: 45px;
-                font-size: 24px;
-                cursor: pointer;
-                box-shadow: 0 0 20px var(--color-accent-dim);
-            `;
-            
-            menuBtn.addEventListener('click', () => {
-                rail.classList.toggle('mobile-open');
-            });
-            
-            document.body.appendChild(menuBtn);
-            
-            // Close menu when clicking outside
-            dashboard.addEventListener('click', () => {
-                if (rail.classList.contains('mobile-open')) {
+// ===== BOTTOM TAB BAR FOR MOBILE =====
+function initBottomTabBar() {
+    const existing = document.querySelector('.bottom-tabbar');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    // remove existing when resizing up
+    if (window.innerWidth > 768) {
+        if (existing) existing.remove();
+        return;
+    }
+
+    if (!existing) {
+        const tabbar = document.createElement('nav');
+        tabbar.className = 'bottom-tabbar';
+        tabbar.setAttribute('aria-label', 'Bottom navigation');
+
+        const sections = ['about','skills','work','experience','contact'];
+
+        sections.forEach(sec => {
+            const btn = document.createElement('button');
+            btn.className = 'tab-btn';
+            btn.type = 'button';
+            btn.setAttribute('data-section', sec);
+            btn.title = sec.replace(/^(.)/, s => s.toUpperCase());
+            btn.innerHTML = `<span class="tab-label">${btn.title || sec}</span>`;
+
+            btn.addEventListener('click', () => {
+                // find matching nav-item and trigger its click (keeps consistent behavior)
+                const targetNav = document.querySelector(`.nav-item[data-section="${sec}"]`);
+                if (targetNav) targetNav.click();
+
+                // close rail if open (off-canvas behavior)
+                const rail = document.querySelector('.command-rail');
+                if (rail && rail.classList.contains('mobile-open')) {
                     rail.classList.remove('mobile-open');
                 }
             });
-        }
+
+            tabbar.appendChild(btn);
+        });
+
+        document.body.appendChild(tabbar);
     }
 }
 
-initMobileMenu();
-window.addEventListener('resize', initMobileMenu);
+initBottomTabBar();
+window.addEventListener('resize', initBottomTabBar);
