@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initSystem() {
     initClock();
+    initBottomTabBar();
     initNavigation();
-    initContactPanel();
     initScrollAnimations();
     initFormHandler();
 }
@@ -43,94 +43,67 @@ function initClock() {
 
 // ===== NAVIGATION SYSTEM =====
 function initNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.panel-section');
+    const panelGrid = document.querySelector('.panel-grid');
     
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const targetSection = item.getAttribute('data-section');
-            
-            // Update nav active state
-            navItems.forEach(nav => {
-                nav.classList.remove('active');
-                const status = nav.querySelector('.nav-status');
-                if (status) status.textContent = '○';
-            });
-            
-            item.classList.add('active');
-            const activeStatus = item.querySelector('.nav-status');
-            if (activeStatus) activeStatus.textContent = '●';
+    // Function to update active section based on scroll position
+    function updateActiveSection() {
+        if (!panelGrid) return;
 
-            // Update mobile bottom tabbar active state if present
-            const tabBtns = document.querySelectorAll('.bottom-tabbar .tab-btn');
-            if (tabBtns) {
-                tabBtns.forEach(b => {
-                    b.classList.toggle('active', b.getAttribute('data-section') === targetSection);
-                });
-            }
-            
-            // Switch sections with animation
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            const targetElement = document.getElementById(targetSection);
-            if (targetElement) {
-                setTimeout(() => {
-                    targetElement.classList.add('active');
-                    
-                    // Trigger animations based on section
-                    if (targetSection === 'skills') {
-                        initMagneticHover();
-                    }
-                }, 50);
+        const scrollPosition = panelGrid.scrollTop;
+        const offset = 100; // Offset from top to determine "active" section
+
+        let currentSection = null;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - panelGrid.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            // Check if scroll position is within this section (with offset)
+            if (scrollPosition + offset >= sectionTop && scrollPosition + offset < sectionBottom) {
+                currentSection = section.id;
             }
         });
-    });
+
+        // If we're at the very top, ensure first section is active
+        if (scrollPosition < 50) {
+            currentSection = sections[0]?.id;
+        }
+
+        // If we're near the bottom, ensure last section is active
+        const scrollBottom = scrollPosition + panelGrid.clientHeight;
+        const scrollHeight = panelGrid.scrollHeight;
+        if (scrollBottom >= scrollHeight - 50) {
+            currentSection = sections[sections.length - 1]?.id;
+        }
+
+        if (currentSection) {
+            // Update mobile bottom tabbar
+            const tabBtns = document.querySelectorAll('.bottom-tabbar .tab-btn');
+            if (tabBtns.length) {
+                tabBtns.forEach(b => {
+                    b.classList.toggle('active', b.getAttribute('data-section') === currentSection);
+                });
+            }
+
+            // Trigger animations for skills section (only once)
+            if (currentSection === 'skills' && !window.skillsAnimationTriggered) {
+                initMagneticHover();
+                window.skillsAnimationTriggered = true;
+            }
+        }
+    }
+
+    // Listen to scroll events on the panel grid
+    if (panelGrid) {
+        panelGrid.addEventListener('scroll', updateActiveSection);
+        // Run once on load
+        updateActiveSection();
+    }
 }
 
 // ===== SKILL BARS ANIMATION (REMOVED) =====
 // Skills now use card-based system
-
-
-
-// ===== CONTACT PANEL =====
-function initContactPanel() {
-    const contactBtn = document.getElementById('contactBtn');
-    const contactOverlay = document.getElementById('contactOverlay');
-    const contactClose = document.getElementById('contactClose');
-    
-    if (contactBtn && contactOverlay) {
-        contactBtn.addEventListener('click', () => {
-            contactOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            playOpenSound();
-        });
-    }
-    
-    if (contactClose && contactOverlay) {
-        contactClose.addEventListener('click', () => {
-            contactOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        // Close on overlay click
-        contactOverlay.addEventListener('click', (e) => {
-            if (e.target === contactOverlay) {
-                contactOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-    
-    // ESC key to close
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && contactOverlay.classList.contains('active')) {
-            contactOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-}
 
 // ===== SCROLL ANIMATIONS =====
 function initScrollAnimations() {
@@ -400,51 +373,42 @@ console.log(`
 ╚═══════════════════════════════════════╝
 `);
 
-// ===== MOBILE MENU TOGGLE (FOR RESPONSIVE) =====
-// ===== BOTTOM TAB BAR FOR MOBILE =====
+// ===== BOTTOM TAB BAR (ALWAYS VISIBLE) =====
 function initBottomTabBar() {
     const existing = document.querySelector('.bottom-tabbar');
-    const navItems = document.querySelectorAll('.nav-item');
 
-    // remove existing when resizing up
-    if (window.innerWidth > 768) {
-        if (existing) existing.remove();
-        return;
-    }
+    // Don't recreate if already exists
+    if (existing) return;
 
-    if (!existing) {
-        const tabbar = document.createElement('nav');
-        tabbar.className = 'bottom-tabbar';
-        tabbar.setAttribute('aria-label', 'Bottom navigation');
+    const tabbar = document.createElement('nav');
+    tabbar.className = 'bottom-tabbar';
+    tabbar.setAttribute('aria-label', 'Bottom navigation');
 
-        const sections = ['about','skills','work','experience','contact'];
+    const sections = ['about','skills','work','experience','contact'];
+    const panelGrid = document.querySelector('.panel-grid');
 
-        sections.forEach(sec => {
-            const btn = document.createElement('button');
-            btn.className = 'tab-btn';
-            btn.type = 'button';
-            btn.setAttribute('data-section', sec);
-            btn.title = sec.replace(/^(.)/, s => s.toUpperCase());
-            btn.innerHTML = `<span class="tab-label">${btn.title || sec}</span>`;
+    sections.forEach(sec => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn';
+        btn.type = 'button';
+        btn.setAttribute('data-section', sec);
+        btn.title = sec.replace(/^(.)/, s => s.toUpperCase());
+        btn.innerHTML = `<span class="tab-label">${btn.title || sec}</span>`;
 
-            btn.addEventListener('click', () => {
-                // find matching nav-item and trigger its click (keeps consistent behavior)
-                const targetNav = document.querySelector(`.nav-item[data-section="${sec}"]`);
-                if (targetNav) targetNav.click();
-
-                // close rail if open (off-canvas behavior)
-                const rail = document.querySelector('.command-rail');
-                if (rail && rail.classList.contains('mobile-open')) {
-                    rail.classList.remove('mobile-open');
-                }
-            });
-
-            tabbar.appendChild(btn);
+        btn.addEventListener('click', () => {
+            // Smooth scroll to section
+            const targetElement = document.getElementById(sec);
+            if (targetElement && panelGrid) {
+                const offsetTop = targetElement.offsetTop - panelGrid.offsetTop;
+                panelGrid.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
         });
 
-        document.body.appendChild(tabbar);
-    }
-}
+        tabbar.appendChild(btn);
+    });
 
-initBottomTabBar();
-window.addEventListener('resize', initBottomTabBar);
+    document.body.appendChild(tabbar);
+}
