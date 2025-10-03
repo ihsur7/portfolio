@@ -382,6 +382,11 @@ a {
   flex-wrap: wrap;
 }
 
+.hero__cta .btn {
+  flex: 1;
+  min-width: 200px;
+}
+
 .hero__stats {
   margin-top: var(--space-lg);
   display: grid;
