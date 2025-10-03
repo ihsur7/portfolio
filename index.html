@@ -3,226 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rushi — Creative Developer</title>
+    <title>SYSTEM // Resume v2.0</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="nav__brand">
-            <img src="logo.svg" alt="Logo" class="nav__logo">
-            <span class="nav__name">Atelier Patel</span>
-        </div>
-        <div class="nav__links">
-            <a href="#work" class="nav__link">WORK</a>
-            <a href="#about" class="nav__link">ABOUT</a>
-            <a href="#contact" class="nav__link">CONTACT</a>
-        </div>
-        <div class="nav__toggle" id="navToggle">
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <!-- <div class="hero__background">
-            <div class="hero__grid"></div>
-        </div> -->
-        <div class="hero__content">
-            <div class="hero__text">
-                <h1 class="hero__title">
-                    <span class="hero__title-line">Hi, I am Rushi.</span>
-                </h1>
-                <p class="hero__subtitle">
-                    <span class="hero__subtitle-accent">PhD</span> | SOFTWARE DEVELOPER
-                </p>
-                            <div class="hero__cta">
-                <a href="#work" class="btn btn--primary">VIEW WORK</a>
-                <a href="#contact" class="btn btn--secondary">GET IN TOUCH</a>
-            </div>
-            </div>
-
-        </div>
-        <div class="hero__scroll">
-            <span class="hero__scroll-text">SCROLL</span>
-            <div class="hero__scroll-indicator"></div>
-        </div>
-    </section>
-
-    <!-- Work Section -->
-    <section class="work" id="work">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">SELECTED WORK</h2>
-                <div class="section-number">01</div>
+    <!-- Cursor follower -->
+    <div class="cursor-follower"></div>
+    
+    <!-- System container -->
+    <div class="system-container">
+        <!-- Left command rail -->
+        <div class="command-rail">
+            <div class="rail-header">
+                <div class="rail-logo">
+                    <span class="flicker">&gt;_</span> SYSTEM
+                </div>
+                <div class="system-time" id="systemTime">00:00:00</div>
             </div>
             
-            <div class="work__grid">
-                <article class="work__item" data-category="web">
-                    <div class="work__item-visual">
-                        <div class="work__item-image"></div>
-                        <div class="work__item-overlay">
-                            <span class="work__item-tech">REACT / TYPESCRIPT</span>
-                        </div>
+            <nav class="rail-nav">
+                <div class="nav-item active" data-section="about">
+                    <span class="nav-icon">01</span>
+                    <span class="nav-label">ABOUT.exe</span>
+                    <span class="nav-status">●</span>
+                </div>
+                <div class="nav-item" data-section="skills">
+                    <span class="nav-icon">02</span>
+                    <span class="nav-label">SKILLS.sys</span>
+                    <span class="nav-status">○</span>
+                </div>
+                <div class="nav-item" data-section="work">
+                    <span class="nav-icon">03</span>
+                    <span class="nav-label">WORK.log</span>
+                    <span class="nav-status">○</span>
+                </div>
+                <div class="nav-item" data-section="experience">
+                    <span class="nav-icon">04</span>
+                    <span class="nav-label">EXP.dat</span>
+                    <span class="nav-status">○</span>
+                </div>
+            </nav>
+            
+            <div class="rail-footer">
+                <div class="system-info">
+                    <div class="info-line">
+                        <span class="info-label">CPU:</span>
+                        <div class="info-bar"><div class="info-fill" style="width: 45%"></div></div>
                     </div>
-                    <div class="work__item-content">
-                        <h3 class="work__item-title">E-COMMERCE PLATFORM</h3>
-                        <p class="work__item-description">Modern shopping experience with advanced filtering and seamless checkout flow</p>
-                        <div class="work__item-tags">
-                            <span class="tag">FRONTEND</span>
-                            <span class="tag">UI/UX</span>
-                        </div>
+                    <div class="info-line">
+                        <span class="info-label">MEM:</span>
+                        <div class="info-bar"><div class="info-fill" style="width: 67%"></div></div>
                     </div>
-                </article>
-
-                <article class="work__item" data-category="app">
-                    <div class="work__item-visual">
-                        <div class="work__item-image"></div>
-                        <div class="work__item-overlay">
-                            <span class="work__item-tech">REACT NATIVE</span>
-                        </div>
-                    </div>
-                    <div class="work__item-content">
-                        <h3 class="work__item-title">FINTECH MOBILE APP</h3>
-                        <p class="work__item-description">Investment tracking app with real-time data visualization and portfolio analytics</p>
-                        <div class="work__item-tags">
-                            <span class="tag">MOBILE</span>
-                            <span class="tag">FINTECH</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="work__item" data-category="design">
-                    <div class="work__item-visual">
-                        <div class="work__item-image"></div>
-                        <div class="work__item-overlay">
-                            <span class="work__item-tech">FIGMA / PROTOTYPING</span>
-                        </div>
-                    </div>
-                    <div class="work__item-content">
-                        <h3 class="work__item-title">BRAND IDENTITY SYSTEM</h3>
-                        <p class="work__item-description">Complete visual identity and design system for emerging tech startup</p>
-                        <div class="work__item-tags">
-                            <span class="tag">BRANDING</span>
-                            <span class="tag">DESIGN</span>
-                        </div>
-                    </div>
-                </article>
+                </div>
+                <div class="rail-version">v2.0.25</div>
             </div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">ABOUT</h2>
-                <div class="section-number">02</div>
+        
+        <!-- Main dashboard -->
+        <div class="dashboard">
+            <!-- Top status bar -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <span class="status-badge">ONLINE</span>
+                    <span class="status-text">SYSTEM_READY</span>
+                </div>
+                <div class="status-right">
+                    <span class="status-text">LOCATION: [YOUR_CITY]</span>
+                    <div class="status-divider"></div>
+                    <span class="status-text" id="currentDate">03.10.2025</span>
+                </div>
             </div>
             
-            <div class="about__content">
-                <div class="about__text">
-                    <p class="about__paragraph about__paragraph--large">
-                        I'm a creative developer passionate about building digital experiences that matter.
-                    </p>
-                    <p class="about__paragraph">
-                        With a background in both design and development, I bridge the gap between beautiful interfaces and robust functionality. My approach combines Swiss design principles with modern web technologies to create solutions that are both visually striking and highly functional.
-                    </p>
-                    <p class="about__paragraph">
-                        When I'm not coding, you'll find me exploring new design trends, contributing to open source projects, or experimenting with emerging technologies.
-                    </p>
+            <!-- Panel grid -->
+            <div class="panel-grid">
+                <!-- About Section -->
+                <section class="panel-section active" id="about">
+                    <div class="panel-main">
+                        <div class="panel-header">
+                            <h1 class="panel-title glitch" data-text="YOUR_NAME">YOUR_NAME</h1>
+                            <div class="panel-subtitle">&lt; FULL_STACK_DEVELOPER /&gt;</div>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div class="content-box">
+                                <div class="box-header">
+                                    <span class="box-title">// BIO_DATA</span>
+                                    <span class="box-indicator">▸</span>
+                                </div>
+                                <div class="box-body">
+                                    <p>Creative technologist specializing in building exceptional digital experiences. Currently focused on crafting accessible, human-centered products at the intersection of design and engineering.</p>
+                                    <p>Passionate about clean code, intuitive interfaces, and pushing the boundaries of web technology.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stats-grid">
+                                <div class="stat-box">
+                                    <div class="stat-value">5+</div>
+                                    <div class="stat-label">YEARS_EXP</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-value">50+</div>
+                                    <div class="stat-label">PROJECTS</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-value">30+</div>
+                                    <div class="stat-label">CLIENTS</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Skills Section -->
+                <section class="panel-section" id="skills">
+                    <div class="panel-main">
+                        <div class="panel-header">
+                            <h2 class="panel-title">CORE_CAPABILITIES</h2>
+                            <div class="panel-subtitle">// Technical Stack</div>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div class="skills-grid">
+                                <div class="skill-category">
+                                    <div class="category-header">
+                                        <span class="category-icon">[FE]</span>
+                                        <span class="category-title">FRONTEND</span>
+                                    </div>
+                                    <div class="skill-list">
+                                        <div class="skill-item">
+                                            <span class="skill-name">React.js</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 90%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">TypeScript</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">Next.js</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 88%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">CSS/SCSS</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 92%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <div class="category-header">
+                                        <span class="category-icon">[BE]</span>
+                                        <span class="category-title">BACKEND</span>
+                                    </div>
+                                    <div class="skill-list">
+                                        <div class="skill-item">
+                                            <span class="skill-name">Node.js</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 87%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">Python</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">PostgreSQL</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 83%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">MongoDB</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <div class="category-header">
+                                        <span class="category-icon">[DV]</span>
+                                        <span class="category-title">DEVOPS</span>
+                                    </div>
+                                    <div class="skill-list">
+                                        <div class="skill-item">
+                                            <span class="skill-name">Docker</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 78%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">AWS</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">CI/CD</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">Git</span>
+                                            <div class="skill-bar"><div class="skill-fill" style="width: 93%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Work Section -->
+                <section class="panel-section" id="work">
+                    <div class="panel-main">
+                        <div class="panel-header">
+                            <h2 class="panel-title">PROJECT_ARCHIVE</h2>
+                            <div class="panel-subtitle">// Selected Works</div>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div class="projects-grid">
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <span class="project-index">[001]</span>
+                                        <span class="project-status">LIVE</span>
+                                    </div>
+                                    <h3 class="project-title">E-Commerce Platform</h3>
+                                    <p class="project-desc">Full-stack marketplace with real-time inventory, payment integration, and admin dashboard.</p>
+                                    <div class="project-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">Node.js</span>
+                                        <span class="tag">MongoDB</span>
+                                    </div>
+                                    <div class="project-footer">
+                                        <a href="#" class="project-link">VIEW_PROJECT →</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <span class="project-index">[002]</span>
+                                        <span class="project-status">LIVE</span>
+                                    </div>
+                                    <h3 class="project-title">AI Dashboard</h3>
+                                    <p class="project-desc">Analytics platform with machine learning insights and predictive modeling capabilities.</p>
+                                    <div class="project-tags">
+                                        <span class="tag">Next.js</span>
+                                        <span class="tag">Python</span>
+                                        <span class="tag">TensorFlow</span>
+                                    </div>
+                                    <div class="project-footer">
+                                        <a href="#" class="project-link">VIEW_PROJECT →</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <span class="project-index">[003]</span>
+                                        <span class="project-status">ARCHIVED</span>
+                                    </div>
+                                    <h3 class="project-title">Social Network</h3>
+                                    <p class="project-desc">Real-time social platform with messaging, notifications, and content discovery algorithms.</p>
+                                    <div class="project-tags">
+                                        <span class="tag">Vue.js</span>
+                                        <span class="tag">Firebase</span>
+                                        <span class="tag">GraphQL</span>
+                                    </div>
+                                    <div class="project-footer">
+                                        <a href="#" class="project-link">VIEW_PROJECT →</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <span class="project-index">[004]</span>
+                                        <span class="project-status">LIVE</span>
+                                    </div>
+                                    <h3 class="project-title">Design System</h3>
+                                    <p class="project-desc">Comprehensive component library with documentation, theming, and accessibility standards.</p>
+                                    <div class="project-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">Storybook</span>
+                                        <span class="tag">TypeScript</span>
+                                    </div>
+                                    <div class="project-footer">
+                                        <a href="#" class="project-link">VIEW_PROJECT →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Experience Section -->
+                <section class="panel-section" id="experience">
+                    <div class="panel-main">
+                        <div class="panel-header">
+                            <h2 class="panel-title">WORK_HISTORY</h2>
+                            <div class="panel-subtitle">// Professional Experience</div>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-header">
+                                        <div class="timeline-date">[2022 - PRESENT]</div>
+                                        <div class="timeline-status">ACTIVE</div>
+                                    </div>
+                                    <h3 class="timeline-title">Senior Full Stack Developer</h3>
+                                    <div class="timeline-company">Tech Company Inc.</div>
+                                    <ul class="timeline-desc">
+                                        <li>Leading development of core platform features serving 100K+ users</li>
+                                        <li>Architecting scalable microservices infrastructure</li>
+                                        <li>Mentoring team of 5 junior developers</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="timeline-header">
+                                        <div class="timeline-date">[2020 - 2022]</div>
+                                        <div class="timeline-status">COMPLETED</div>
+                                    </div>
+                                    <h3 class="timeline-title">Full Stack Developer</h3>
+                                    <div class="timeline-company">Startup Co.</div>
+                                    <ul class="timeline-desc">
+                                        <li>Built MVP from scratch using modern tech stack</li>
+                                        <li>Implemented CI/CD pipeline and automated testing</li>
+                                        <li>Collaborated with design team on UX improvements</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="timeline-header">
+                                        <div class="timeline-date">[2018 - 2020]</div>
+                                        <div class="timeline-status">COMPLETED</div>
+                                    </div>
+                                    <h3 class="timeline-title">Frontend Developer</h3>
+                                    <div class="timeline-company">Digital Agency</div>
+                                    <ul class="timeline-desc">
+                                        <li>Developed responsive web applications for diverse clients</li>
+                                        <li>Optimized performance and SEO across projects</li>
+                                        <li>Integrated third-party APIs and payment systems</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Persistent contact dock -->
+    <div class="contact-dock">
+        <button class="dock-button" id="contactBtn">
+            <span class="dock-icon">▣</span>
+            <span class="dock-label">CONTACT_ME</span>
+            <span class="dock-pulse"></span>
+        </button>
+    </div>
+    
+    <!-- Contact panel overlay -->
+    <div class="contact-overlay" id="contactOverlay">
+        <div class="contact-panel">
+            <div class="contact-header">
+                <div class="contact-title">
+                    <span class="flicker">&gt;</span> INITIALIZE_CONTACT
+                </div>
+                <button class="contact-close" id="contactClose">✕</button>
+            </div>
+            
+            <div class="contact-body">
+                <div class="contact-section">
+                    <div class="contact-label">// DIRECT_CHANNELS</div>
+                    <div class="contact-links">
+                        <a href="mailto:your.email@example.com" class="contact-link">
+                            <span class="link-icon">📧</span>
+                            <span class="link-text">your.email@example.com</span>
+                        </a>
+                        <a href="tel:+1234567890" class="contact-link">
+                            <span class="link-icon">📱</span>
+                            <span class="link-text">+1 (234) 567-890</span>
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="about__skills">
-                    <h3 class="about__skills-title">TECHNICAL EXPERTISE</h3>
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h4 class="skill-category__title">FRONTEND</h4>
-                            <ul class="skill-list">
-                                <li>React / Next.js</li>
-                                <li>TypeScript</li>
-                                <li>Vue.js</li>
-                                <li>CSS3 / Sass</li>
-                            </ul>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category__title">BACKEND</h4>
-                            <ul class="skill-list">
-                                <li>Node.js</li>
-                                <li>Python</li>
-                                <li>PostgreSQL</li>
-                                <li>MongoDB</li>
-                            </ul>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category__title">DESIGN</h4>
-                            <ul class="skill-list">
-                                <li>Figma</li>
-                                <li>Adobe Creative Suite</li>
-                                <li>Prototyping</li>
-                                <li>Design Systems</li>
-                            </ul>
-                        </div>
+                <div class="contact-section">
+                    <div class="contact-label">// NETWORK_LINKS</div>
+                    <div class="contact-links">
+                        <a href="https://github.com/yourusername" target="_blank" class="contact-link">
+                            <span class="link-icon">⚡</span>
+                            <span class="link-text">GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank" class="contact-link">
+                            <span class="link-icon">💼</span>
+                            <span class="link-text">LinkedIn</span>
+                        </a>
+                        <a href="https://twitter.com/yourusername" target="_blank" class="contact-link">
+                            <span class="link-icon">🐦</span>
+                            <span class="link-text">Twitter</span>
+                        </a>
+                        <a href="https://dribbble.com/yourusername" target="_blank" class="contact-link">
+                            <span class="link-icon">🎨</span>
+                            <span class="link-text">Dribbble</span>
+                        </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">CONTACT</h2>
-                <div class="section-number">03</div>
-            </div>
-            
-            <div class="contact__content">
-                <div class="contact__text">
-                    <h3 class="contact__heading">LET'S WORK TOGETHER</h3>
-                    <p class="contact__description">
-                        Have a project in mind? I'm always interested in discussing new opportunities and creative challenges.
-                    </p>
                 </div>
                 
-                <div class="contact__info">
-                    <div class="contact__item">
-                        <span class="contact__label">EMAIL</span>
-                        <a href="mailto:hello@rushi.dev" class="contact__link">hello@rushi.dev</a>
-                    </div>
-                    <div class="contact__item">
-                        <span class="contact__label">SOCIAL</span>
-                        <div class="contact__social">
-                            <a href="#" class="contact__social-link">LINKEDIN</a>
-                            <a href="#" class="contact__social-link">GITHUB</a>
-                            <a href="#" class="contact__social-link">TWITTER</a>
+                <div class="contact-section">
+                    <div class="contact-label">// QUICK_MESSAGE</div>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="NAME" required>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="EMAIL" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-input" rows="4" placeholder="MESSAGE" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">
+                            <span>SEND_MESSAGE</span>
+                            <span class="submit-arrow">→</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__copy">
-                    <span>© 2025 RUSHI</span>
-                    <span>CREATIVE DEVELOPER</span>
-                </div>
-                <div class="footer__links">
-                    <a href="#" class="footer__link">PRIVACY</a>
-                    <a href="#" class="footer__link">IMPRINT</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    </div>
+    
     <script src="js/main.js"></script>
 </body>
 </html>
