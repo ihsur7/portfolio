@@ -179,6 +179,13 @@ a {
   transition: all var(--transition-base);
 }
 
+/* When hidden (hero in view) move nav out and make it visually non-intrusive */
+.nav--hidden {
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .nav {
   display: flex;
   align-items: center;

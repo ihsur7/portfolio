@@ -16,14 +16,33 @@ class PortfolioApp {
 
   // ===== NAVIGATION ===== //
   setupNavigation() {
-    const nav = document.getElementById('nav');
-    const navToggle = document.getElementById('navToggle');
-    let lastScrollY = window.scrollY;
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
 
-    // Hide/show nav on scroll
+    // Hide nav while hero is visible using IntersectionObserver
+    try {
+      const hero = document.querySelector('#hero');
+      if (hero) {
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              nav.classList.add('nav--hidden');
+            } else {
+              nav.classList.remove('nav--hidden');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        heroObserver.observe(hero);
+      }
+    } catch (e) {
+      // IntersectionObserver may not be supported; fallback to showing nav
+      nav.classList.remove('nav--hidden');
+    }
+
+    // Update nav background/shadow on scroll (no hide-on-scroll)
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
-      
       if (currentScrollY > 100) {
         nav.style.background = 'rgba(255, 255, 255, 0.98)';
         nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
@@ -31,15 +50,6 @@ class PortfolioApp {
         nav.style.background = 'rgba(255, 255, 255, 0.95)';
         nav.style.boxShadow = 'none';
       }
-
-      // Hide nav when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        nav.style.transform = 'translateY(-100%)';
-      } else {
-        nav.style.transform = 'translateY(0)';
-      }
-      
-      lastScrollY = currentScrollY;
     });
 
     // Smooth scroll for navigation links
