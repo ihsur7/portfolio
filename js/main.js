@@ -7,7 +7,6 @@ class PortfolioApp {
   init() {
     this.setupEventListeners();
     this.setupScrollAnimations();
-    this.setupCursor();
     this.setupNavigation();
     this.setupWorkItemInteractions();
     this.setupParallaxEffects();
@@ -68,71 +67,7 @@ class PortfolioApp {
     });
   }
 
-  // ===== CUSTOM CURSOR ===== //
-  setupCursor() {
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor';
-    cursor.innerHTML = '<div class="cursor__inner"></div>';
-    document.body.appendChild(cursor);
 
-    // Add cursor styles
-    const cursorStyles = `
-      .cursor {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        pointer-events: none;
-        z-index: 9999;
-        mix-blend-mode: difference;
-        transition: transform 0.1s ease-out;
-      }
-      
-      .cursor__inner {
-        width: 100%;
-        height: 100%;
-        background: var(--color-accent);
-        border-radius: 50%;
-        transform: scale(0.2);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      
-      .cursor--active .cursor__inner {
-        transform: scale(1);
-      }
-      
-      .cursor--hidden {
-        opacity: 0;
-      }
-      
-      @media (max-width: 768px) {
-        .cursor {
-          display: none;
-        }
-      }
-    `;
-
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = cursorStyles;
-    document.head.appendChild(styleSheet);
-
-    // Cursor movement
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
-    });
-
-    // Cursor interactions
-    const interactiveElements = 'a, button, .work__item, .btn';
-    document.querySelectorAll(interactiveElements).forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('cursor--active'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('cursor--active'));
-    });
-
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', () => cursor.classList.add('cursor--hidden'));
-    document.addEventListener('mouseenter', () => cursor.classList.remove('cursor--hidden'));
-  }
 
   // ===== SCROLL ANIMATIONS ===== //
   setupScrollAnimations() {
