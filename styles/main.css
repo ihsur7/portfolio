@@ -430,8 +430,9 @@ a {
 }
 
 @keyframes scrollIndicator {
-  0%, 100% { transform: translateY(-20px); }
-  50% { transform: translateY(60px); }
+  0%, 100% { transform: translateY(-20px); opacity: 1; }
+  50% { transform: translateY(60px); opacity: 0; }
+  
 }
 
 /* ===== SECTION HEADERS ===== */
