@@ -17,8 +17,10 @@
             <span class="nav__name">RUSHI</span>
         </div>
         <div class="nav__links">
-            <a href="#work" class="nav__link">WORK</a>
-            <a href="#about" class="nav__link">ABOUT</a>
+            <a href="#experience" class="nav__link">EXPERIENCE</a>
+            <a href="#projects" class="nav__link">PROJECTS</a>
+            <a href="#skills" class="nav__link">SKILLS</a>
+            <a href="#education" class="nav__link">EDUCATION</a>
             <a href="#contact" class="nav__link">CONTACT</a>
         </div>
         <div class="nav__toggle" id="navToggle">
@@ -35,18 +37,28 @@
         <div class="hero__content">
             <div class="hero__text">
                 <h1 class="hero__title">
-                    <span class="hero__title-line">CREATIVE</span>
-                    <span class="hero__title-line hero__title-line--accent">DEVELOPER</span>
+                    <span class="hero__title-line">SOFTWARE DEVELOPER</span>
+                    <!-- <span class="hero__title-line hero__title-line--accent">SOFTWARE DEVELOPER</span> -->
                 </h1>
-                <p class="hero__subtitle">
-                    Crafting digital experiences where 
-                    <span class="text-accent">Swiss precision</span> meets 
-                    <span class="text-accent">modern innovation</span>
-                </p>
+                <p class="hero__subtitle">Results-driven developer with 5+ years building robust systems, blending OOP, data engineering, and DevOps for fast, reliable delivery.</p>
             </div>
             <div class="hero__cta">
-                <a href="#work" class="btn btn--primary">VIEW WORK</a>
+                <a href="#experience" class="btn btn--primary">VIEW EXPERIENCE</a>
                 <a href="#contact" class="btn btn--secondary">GET IN TOUCH</a>
+            </div>
+            <div class="hero__stats">
+                <div class="hero__stat">
+                    <span class="hero__stat-value">5+ yrs</span>
+                    <span class="hero__stat-label">full lifecycle delivery</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-value">Python · TypeScript</span>
+                    <span class="hero__stat-label">primary toolset</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-value">Data &amp; DevOps</span>
+                    <span class="hero__stat-label">ETL, SQL, CI/CD</span>
+                </div>
             </div>
         </div>
         <div class="hero__scroll">
@@ -55,62 +67,178 @@
         </div>
     </section>
 
-    <!-- Work Section -->
-    <section class="work" id="work">
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">SELECTED WORK</h2>
+                <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
                 <div class="section-number">01</div>
+            </div>
+
+            <div class="experience__timeline">
+                <article class="experience__item">
+                    <div class="experience__header">
+                        <div>
+                            <h3 class="experience__role">Full-stack Developer</h3>
+                            <p class="experience__company">Chevalet.co</p>
+                        </div>
+                        <div class="experience__meta">
+                            <span class="experience__period">Jul 2025 – Present</span>
+                            <span class="experience__location">Remote</span>
+                        </div>
+                    </div>
+                    <p class="experience__summary">Delivering custom financial and analytics platforms with React, Next.js, and TypeScript backed by optimized PostgreSQL data models.</p>
+                    <ul class="experience__highlights">
+                        <li>Built modern full-stack web applications that balance intuitive UX with high-performance TypeScript architecture.</li>
+                        <li>Designed advanced PostgreSQL schemas and SQL to orchestrate large-scale financial datasets with confidence.</li>
+                        <li>Automated GitHub-based CI/CD pipelines, accelerating release cadence and tightening quality gates.</li>
+                        <li>Transformed product requirements into reliable technical designs through close stakeholder collaboration.</li>
+                    </ul>
+                    <div class="experience__tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Next.js</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">CI/CD</span>
+                    </div>
+                </article>
+
+                <article class="experience__item">
+                    <div class="experience__header">
+                        <div>
+                            <h3 class="experience__role">Software Developer</h3>
+                            <p class="experience__company">Tandm.ai</p>
+                        </div>
+                        <div class="experience__meta">
+                            <span class="experience__period">Oct 2023 – Aug 2025</span>
+                            <span class="experience__location">Hybrid</span>
+                        </div>
+                    </div>
+                    <p class="experience__summary">Scaled Python backend services and API infrastructure that power a complex data platform for enterprise customers.</p>
+                    <ul class="experience__highlights">
+                        <li>Refactored core services with robust OOP and design patterns, boosting API scalability and maintainability.</li>
+                        <li>Containerized services with Docker and managed CI/CD to deliver reliable, cloud-ready deployments.</li>
+                        <li>Lifted backend performance by 50% through algorithmic optimization and data access tuning.</li>
+                        <li>Led code reviews and documentation within Agile/Scrum teams to uphold engineering excellence.</li>
+                    </ul>
+                    <div class="experience__tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">OOP</span>
+                        <span class="tag">Agile</span>
+                    </div>
+                </article>
+
+                <article class="experience__item">
+                    <div class="experience__header">
+                        <div>
+                            <h3 class="experience__role">PhD Candidate & Researcher</h3>
+                            <p class="experience__company">University of Queensland</p>
+                        </div>
+                        <div class="experience__meta">
+                            <span class="experience__period">Apr 2019 – Dec 2023</span>
+                            <span class="experience__location">Brisbane, QLD</span>
+                        </div>
+                    </div>
+                    <p class="experience__summary">Engineered scientific tooling and automated HPC workflows for advanced materials research and data analysis.</p>
+                    <ul class="experience__highlights">
+                        <li>Developed Python-based ETL pipelines and visualization tools to streamline complex computational studies.</li>
+                        <li>Optimized high-performance simulations, cutting runtime by 30% via parallelization and algorithm tuning.</li>
+                        <li>Delivered seven peer-reviewed publications and comprehensive technical documentation.</li>
+                        <li>Collaborated across interdisciplinary teams, translating engineering data into actionable insights.</li>
+                    </ul>
+                    <div class="experience__tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">ETL</span>
+                        <span class="tag">HPC</span>
+                        <span class="tag">Data Visualization</span>
+                    </div>
+                </article>
+
+                <article class="experience__item">
+                    <div class="experience__header">
+                        <div>
+                            <h3 class="experience__role">Consultant (Intern)</h3>
+                            <p class="experience__company">180 Degrees Consulting</p>
+                        </div>
+                        <div class="experience__meta">
+                            <span class="experience__period">Feb 2021 – Jun 2021</span>
+                            <span class="experience__location">Brisbane, QLD</span>
+                        </div>
+                    </div>
+                    <p class="experience__summary">Partnered with cross-functional teams to deliver data-backed strategy recommendations for non-profits.</p>
+                    <ul class="experience__highlights">
+                        <li>Led market research on industry trends and competitive positioning to inform client roadmaps.</li>
+                        <li>Coordinated deliverables within a six-person Agile squad, ensuring on-time, high-quality outcomes.</li>
+                    </ul>
+                    <div class="experience__tags">
+                        <span class="tag">Stakeholder Engagement</span>
+                        <span class="tag">Research</span>
+                        <span class="tag">Strategy</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="work" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">FEATURED PROJECTS</h2>
+                <div class="section-number">02</div>
             </div>
             
             <div class="work__grid">
-                <article class="work__item" data-category="web">
+                <article class="work__item" data-category="data">
                     <div class="work__item-visual">
                         <div class="work__item-image"></div>
                         <div class="work__item-overlay">
-                            <span class="work__item-tech">REACT / TYPESCRIPT</span>
+                            <span class="work__item-tech">PYSPARK / ML</span>
                         </div>
                     </div>
                     <div class="work__item-content">
-                        <h3 class="work__item-title">E-COMMERCE PLATFORM</h3>
-                        <p class="work__item-description">Modern shopping experience with advanced filtering and seamless checkout flow</p>
+                        <h3 class="work__item-title">Fake News Detection Pipeline</h3>
+                        <p class="work__item-description">End-to-end data pipeline and Gradient Boosted Tree classifier that flags misinformation across large-scale news feeds.</p>
                         <div class="work__item-tags">
-                            <span class="tag">FRONTEND</span>
-                            <span class="tag">UI/UX</span>
+                            <span class="tag">PySpark</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">ML Ops</span>
                         </div>
                     </div>
                 </article>
 
-                <article class="work__item" data-category="app">
+                <article class="work__item" data-category="ml">
                     <div class="work__item-visual">
                         <div class="work__item-image"></div>
                         <div class="work__item-overlay">
-                            <span class="work__item-tech">REACT NATIVE</span>
+                            <span class="work__item-tech">PYTHON / SCIKIT-LEARN</span>
                         </div>
                     </div>
                     <div class="work__item-content">
-                        <h3 class="work__item-title">FINTECH MOBILE APP</h3>
-                        <p class="work__item-description">Investment tracking app with real-time data visualization and portfolio analytics</p>
+                        <h3 class="work__item-title">Football Market Value Model</h3>
+                        <p class="work__item-description">Random Forest regression workflow predicting Premier League player valuations from engineered performance features.</p>
                         <div class="work__item-tags">
-                            <span class="tag">MOBILE</span>
-                            <span class="tag">FINTECH</span>
+                            <span class="tag">Scikit-Learn</span>
+                            <span class="tag">NumPy</span>
+                            <span class="tag">Model Evaluation</span>
                         </div>
                     </div>
                 </article>
 
-                <article class="work__item" data-category="design">
+                <article class="work__item" data-category="platforms">
                     <div class="work__item-visual">
                         <div class="work__item-image"></div>
                         <div class="work__item-overlay">
-                            <span class="work__item-tech">FIGMA / PROTOTYPING</span>
+                            <span class="work__item-tech">CI/CD / DEVOPS</span>
                         </div>
                     </div>
                     <div class="work__item-content">
-                        <h3 class="work__item-title">BRAND IDENTITY SYSTEM</h3>
-                        <p class="work__item-description">Complete visual identity and design system for emerging tech startup</p>
+                        <h3 class="work__item-title">Automated Deployment Toolkit</h3>
+                        <p class="work__item-description">GitHub Actions workflows and Dockerized environments that streamline build, test, and release gates for cross-team delivery.</p>
                         <div class="work__item-tags">
-                            <span class="tag">BRANDING</span>
-                            <span class="tag">DESIGN</span>
+                            <span class="tag">GitHub Actions</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Kubernetes Ready</span>
                         </div>
                     </div>
                 </article>
@@ -118,24 +246,24 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <!-- Skills Section -->
+    <section class="about" id="skills">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">ABOUT</h2>
-                <div class="section-number">02</div>
+                <h2 class="section-title">CORE STRENGTHS</h2>
+                <div class="section-number">03</div>
             </div>
             
             <div class="about__content">
                 <div class="about__text">
                     <p class="about__paragraph about__paragraph--large">
-                        I'm a creative developer passionate about building digital experiences that matter.
+                        I architect resilient platforms where robust backend services, thoughtful data models, and polished interfaces meet.
                     </p>
                     <p class="about__paragraph">
-                        With a background in both design and development, I bridge the gap between beautiful interfaces and robust functionality. My approach combines Swiss design principles with modern web technologies to create solutions that are both visually striking and highly functional.
+                        My experience spans mission-critical APIs, data-intensive workflows, and engineering leadership across start-ups and research teams. From Python and TypeScript to C#/.NET and React, I ramp quickly, enforce clean architecture, and keep delivery moving.
                     </p>
                     <p class="about__paragraph">
-                        When I'm not coding, you'll find me exploring new design trends, contributing to open source projects, or experimenting with emerging technologies.
+                        I thrive in collaborative, Agile environments—translating stakeholder needs, documenting decisions, and guiding teams through code reviews, CI/CD, and continuous improvement.
                     </p>
                 </div>
                 
@@ -143,34 +271,101 @@
                     <h3 class="about__skills-title">TECHNICAL EXPERTISE</h3>
                     <div class="skills-grid">
                         <div class="skill-category">
-                            <h4 class="skill-category__title">FRONTEND</h4>
+                            <h4 class="skill-category__title">PROGRAMMING &amp; FRAMEWORKS</h4>
                             <ul class="skill-list">
-                                <li>React / Next.js</li>
-                                <li>TypeScript</li>
-                                <li>Vue.js</li>
-                                <li>CSS3 / Sass</li>
+                                <li>Python (Pandas, NumPy, Scikit-Learn, PySpark)</li>
+                                <li>TypeScript / JavaScript (React, Next.js)</li>
+                                <li>C# / .NET</li>
+                                <li>Tailwind CSS, HTML/CSS</li>
                             </ul>
                         </div>
                         <div class="skill-category">
-                            <h4 class="skill-category__title">BACKEND</h4>
+                            <h4 class="skill-category__title">BACKEND &amp; DATABASES</h4>
                             <ul class="skill-list">
-                                <li>Node.js</li>
-                                <li>Python</li>
-                                <li>PostgreSQL</li>
-                                <li>MongoDB</li>
+                                <li>REST API architecture &amp; OOP design</li>
+                                <li>PostgreSQL, advanced SQL, database modeling</li>
+                                <li>Performance tuning &amp; refactoring</li>
+                                <li>Code quality and design patterns</li>
                             </ul>
                         </div>
                         <div class="skill-category">
-                            <h4 class="skill-category__title">DESIGN</h4>
+                            <h4 class="skill-category__title">CLOUD &amp; DEVOPS</h4>
                             <ul class="skill-list">
-                                <li>Figma</li>
-                                <li>Adobe Creative Suite</li>
-                                <li>Prototyping</li>
-                                <li>Design Systems</li>
+                                <li>AWS (EC2, S3), familiarity with Azure (ADLS, Key Vault)</li>
+                                <li>Docker, Kubernetes-ready deployments</li>
+                                <li>GitHub Actions, CI/CD automation</li>
+                                <li>Branching strategies &amp; release management</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">DATA ENGINEERING &amp; SCIENCE</h4>
+                            <ul class="skill-list">
+                                <li>Data pipelines &amp; ETL automation</li>
+                                <li>PySpark and distributed processing</li>
+                                <li>Advanced analytics &amp; model evaluation</li>
+                                <li>HPC optimization &amp; computational modeling</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">COLLABORATION</h4>
+                            <ul class="skill-list">
+                                <li>Agile delivery, Jira, Confluence</li>
+                                <li>Cross-functional stakeholder alignment</li>
+                                <li>Code reviews &amp; mentoring</li>
+                                <li>Technical documentation</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category__title">SOFT SKILLS</h4>
+                            <ul class="skill-list">
+                                <li>Fluent English, French A2/B1</li>
+                                <li>Analytical problem solving</li>
+                                <li>Time management &amp; prioritisation</li>
+                                <li>Proactive stakeholder collaboration</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="education" id="education">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">EDUCATION</h2>
+                <div class="section-number">04</div>
+            </div>
+
+            <div class="education__list">
+                <article class="education__item">
+                    <div class="education__header">
+                        <h3 class="education__degree">Doctor of Philosophy, Mechanical Engineering</h3>
+                        <span class="education__institution">University of Queensland</span>
+                    </div>
+                    <div class="education__meta">
+                        <span>Dec 2023</span>
+                        <span>Brisbane, QLD</span>
+                    </div>
+                    <p class="education__details">Thesis: <em>In vitro evaluation of porous PHBV-based scaffolds for bone regeneration application.</em></p>
+                    <ul class="education__highlights">
+                        <li>Published seven peer-reviewed journal articles during candidature.</li>
+                        <li>Developed computational tooling that accelerated complex engineering workflows.</li>
+                    </ul>
+                </article>
+
+                <article class="education__item">
+                    <div class="education__header">
+                        <h3 class="education__degree">Bachelor of Engineering, Mechanical Engineering (Extended Major)</h3>
+                        <span class="education__institution">University of Queensland</span>
+                    </div>
+                    <div class="education__meta">
+                        <span>Jul 2018</span>
+                        <span>Brisbane, QLD</span>
+                    </div>
+                    <p class="education__details">Awarded the VIPAC Advanced Dynamics &amp; Vibrations Prize 2016 for excellence in applied mechanics.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -180,14 +375,14 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">CONTACT</h2>
-                <div class="section-number">03</div>
+                <div class="section-number">05</div>
             </div>
             
             <div class="contact__content">
                 <div class="contact__text">
                     <h3 class="contact__heading">LET'S WORK TOGETHER</h3>
                     <p class="contact__description">
-                        Have a project in mind? I'm always interested in discussing new opportunities and creative challenges.
+                        Building a data-intensive platform, modernising a codebase, or levelling up CI/CD? I’d love to help ship it.
                     </p>
                 </div>
                 
@@ -202,6 +397,13 @@
                             <a href="#" class="contact__social-link">LINKEDIN</a>
                             <a href="#" class="contact__social-link">GITHUB</a>
                             <a href="#" class="contact__social-link">TWITTER</a>
+                        </div>
+                    </div>
+                    <div class="contact__item">
+                        <span class="contact__label">LANGUAGES</span>
+                        <div class="contact__languages">
+                            <span class="contact__language">English — Fluent</span>
+                            <span class="contact__language">French — A2/B1</span>
                         </div>
                     </div>
                 </div>

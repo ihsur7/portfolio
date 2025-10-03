@@ -142,7 +142,7 @@ class PortfolioApp {
 
     // Observe elements for animation
     const animateElements = document.querySelectorAll(
-      '.work__item, .about__paragraph, .skill-category, .contact__item, .section-header'
+      '.experience__item, .work__item, .about__paragraph, .skill-category, .education__item, .hero__stat, .contact__item, .section-header'
     );
     
     animateElements.forEach(el => {
