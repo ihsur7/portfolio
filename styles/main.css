@@ -574,15 +574,14 @@ a {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+  background: var(--color-primary);
   transition: all var(--transition-base);
 }
-
+/* 
 .experience__item:hover .experience__highlights li::before {
   transform: scale(1.3);
   box-shadow: 0 0 0 5px rgba(255, 107, 53, 0.2);
-}
+} */
 
 .experience__tags {
   display: flex;
