@@ -12,6 +12,7 @@ class PortfolioApp {
     this.setupParallaxEffects();
     // this.setupTypewriterEffect();
     setupPlusGridBackground();
+    setupNavScrollSpy();
   }
 
   // ===== NAVIGATION ===== //
@@ -362,6 +363,39 @@ class PortfolioApp {
       }, 2000);
     }, 1500);
   }
+}
+
+// ===== NAV SCROLLSPY ===== //
+function setupNavScrollSpy() {
+  const navLinks = Array.from(document.querySelectorAll('.nav__link'));
+  const sectionIds = navLinks.map(link => link.getAttribute('href').replace('#', ''));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    let activeIdx = 0;
+    for (let i = 0; i < sections.length; i++) {
+      const rect = sections[i].getBoundingClientRect();
+      const sectionTop = rect.top + scrollY;
+      const sectionBottom = sectionTop + rect.height;
+      // Section is in top half if its top is above middle and its bottom is below top
+      if (scrollY + viewportHeight / 2 >= sectionTop && scrollY < sectionBottom) {
+        activeIdx = i;
+        break;
+      }
+    }
+    navLinks.forEach((link, idx) => {
+      if (idx === activeIdx) {
+        link.classList.add('nav__link--active');
+      } else {
+        link.classList.remove('nav__link--active');
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('resize', onScroll);
+  onScroll();
 }
 
 // ===== PERFORMANCE OPTIMIZATION ===== //

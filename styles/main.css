@@ -239,6 +239,13 @@ a {
   font-weight: 500;
   letter-spacing: 0.05em;
   position: relative;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav__link--active {
+  color: var(--color-accent);
+  background: rgba(0, 35, 190, 0.08);
+  border-radius: 4px;
 }
 
 .nav__link::after {
