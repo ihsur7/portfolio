@@ -1136,11 +1136,11 @@ a {
     align-items: center;
     justify-content: center;
     gap: var(--space-lg);
-    padding: var(--space-2xl) var(--space-md);
+    padding: var(--space-xl) var(--space-md);
+    min-height: 100vh;
     transform: translateX(100%);
     transition: transform var(--transition-base);
     z-index: 999;
-    overflow-y: auto;
   }
 
   .nav__links--open,
