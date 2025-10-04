@@ -10,7 +10,7 @@ class PortfolioApp {
     this.setupNavigation();
     this.setupWorkItemInteractions();
     this.setupParallaxEffects();
-    this.setupTypewriterEffect();
+  // this.setupTypewriterEffect();
   }
 
   // ===== NAVIGATION ===== //
@@ -289,30 +289,7 @@ class PortfolioApp {
     });
   }
 
-  // ===== TYPEWRITER EFFECT ===== //
-  setupTypewriterEffect() {
-    const subtitle = document.querySelector('.hero__subtitle');
-    if (!subtitle) return;
-
-    const text = subtitle.textContent;
-    subtitle.textContent = '';
-    subtitle.style.opacity = '1';
-
-    let i = 0;
-    const typeSpeed = 50;
-    const startDelay = 1000;
-
-    setTimeout(() => {
-      const typeWriter = () => {
-        if (i < text.length) {
-          subtitle.textContent += text.charAt(i);
-          i++;
-          setTimeout(typeWriter, typeSpeed);
-        }
-      };
-      typeWriter();
-    }, startDelay);
-  }
+  // Typewriter effect removed
 
   // ===== EVENT LISTENERS ===== //
   setupEventListeners() {
