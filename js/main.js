@@ -10,7 +10,8 @@ class PortfolioApp {
     this.setupNavigation();
     this.setupWorkItemInteractions();
     this.setupParallaxEffects();
-  // this.setupTypewriterEffect();
+    // this.setupTypewriterEffect();
+    setupPlusGridBackground();
   }
 
   // ===== NAVIGATION ===== //
@@ -424,6 +425,102 @@ class PerformanceOptimizer {
       }
     });
   }
+}
+
+// ===== PLUS GRID BACKGROUND ===== //
+function setupPlusGridBackground() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  // Configurable variables
+  const PLUS_GRID_CONFIG = {
+    cellSize: 30, // px
+    color: '#2563eb',
+    baseOpacity: 0.06,
+    highlightOpacity: 0.33,
+    fontSize: 18,
+    fontWeight: 700,
+    letterSpacing: 1,
+    transition: 'opacity 0.18s',
+    blendMode: 'luminosity',
+  };
+
+  // Create grid container
+  let grid = document.createElement('div');
+  grid.className = 'plus-grid-bg';
+  grid.style.position = 'absolute';
+  grid.style.left = '0';
+  grid.style.top = '0';
+  grid.style.width = '100%';
+  grid.style.height = '100%';
+  grid.style.zIndex = '0';
+  grid.style.overflow = 'hidden';
+  grid.style.pointerEvents = 'none';
+  grid.style.mixBlendMode = PLUS_GRID_CONFIG.blendMode;
+  hero.prepend(grid);
+
+  let plusEls = [];
+  let cols = 0, rows = 0;
+
+  function renderGrid() {
+    plusEls.forEach(el => el.remove());
+    plusEls = [];
+    const rect = hero.getBoundingClientRect();
+    cols = Math.ceil(rect.width / PLUS_GRID_CONFIG.cellSize);
+    rows = Math.ceil(rect.height / PLUS_GRID_CONFIG.cellSize);
+    grid.style.width = rect.width + 'px';
+    grid.style.height = rect.height + 'px';
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const plus = document.createElement('span');
+        plus.textContent = '+';
+        plus.style.position = 'absolute';
+        plus.style.left = (col * PLUS_GRID_CONFIG.cellSize) + 'px';
+        plus.style.top = (row * PLUS_GRID_CONFIG.cellSize) + 'px';
+        plus.style.width = PLUS_GRID_CONFIG.cellSize + 'px';
+        plus.style.height = PLUS_GRID_CONFIG.cellSize + 'px';
+        plus.style.display = 'flex';
+        plus.style.alignItems = 'center';
+        plus.style.justifyContent = 'center';
+        plus.style.fontSize = PLUS_GRID_CONFIG.fontSize + 'px';
+        plus.style.color = PLUS_GRID_CONFIG.color;
+        plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
+        plus.style.transition = PLUS_GRID_CONFIG.transition;
+        plus.style.fontWeight = PLUS_GRID_CONFIG.fontWeight;
+        plus.style.letterSpacing = PLUS_GRID_CONFIG.letterSpacing + 'px';
+        plus.style.userSelect = 'none';
+        plus.style.pointerEvents = 'none';
+        plusEls.push(plus);
+        grid.appendChild(plus);
+      }
+    }
+  }
+
+  function highlightGrid(e) {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    let hoveredCell = null;
+    if (x >= 0 && y >= 0 && x < rect.width && y < rect.height) {
+      hoveredCell = {
+        col: Math.floor(x / PLUS_GRID_CONFIG.cellSize),
+        row: Math.floor(y / PLUS_GRID_CONFIG.cellSize)
+      };
+    }
+    plusEls.forEach((plus, i) => {
+      const row = Math.floor(i / cols);
+      const col = i % cols;
+      const isActive = hoveredCell && Math.abs(hoveredCell.row - row) <= 1 && Math.abs(hoveredCell.col - col) <= 1;
+      plus.style.opacity = isActive ? PLUS_GRID_CONFIG.highlightOpacity : PLUS_GRID_CONFIG.baseOpacity;
+    });
+  }
+
+  renderGrid();
+  window.addEventListener('resize', renderGrid);
+  hero.addEventListener('mousemove', highlightGrid);
+  hero.addEventListener('mouseleave', () => {
+    plusEls.forEach(plus => plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity);
+  });
 }
 
 // ===== INITIALIZATION ===== //
