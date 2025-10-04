@@ -307,6 +307,7 @@ a {
 .hero__image {
   order: -1;
   margin-bottom: var(--space-lg);
+  padding-top: 1em;
 }
 
 .hero__photo {
@@ -381,6 +382,7 @@ a {
   flex-direction: column;
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
+  margin-top: auto;
 }
 
 .hero__cta .btn {
