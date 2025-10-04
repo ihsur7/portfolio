@@ -17,31 +17,77 @@ class PortfolioApp {
 
   // ===== NAVIGATION ===== //
   setupNavigation() {
-  const nav = document.getElementById('nav');
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (!nav || !navLinks) {
+      return;
+    }
+
+    const updateNavBackground = () => {
+      if (nav.classList.contains('nav--menu-open')) {
+        nav.style.background = 'transparent';
+        nav.style.boxShadow = 'none';
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 100) {
+        nav.style.background = 'rgba(255, 255, 255, 0.98)';
+        nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        nav.style.background = 'rgba(255, 255, 255, 0.95)';
+        nav.style.boxShadow = 'none';
+      }
+    };
+
+    const handleKeydown = (event) => {
+      if (event.key === 'Escape') {
+        setMenuState(false);
+      }
+    };
+
+    const setMenuState = (isOpen) => {
+      if (!navToggle) {
+        navLinks.classList.toggle('nav__links--open', isOpen);
+      } else {
+        navToggle.classList.toggle('nav__toggle--active', isOpen);
+        navLinks.classList.toggle('nav__links--open', isOpen);
+      }
+
+      nav.classList.toggle('nav--menu-open', isOpen);
+      document.body.classList.toggle('nav-open', isOpen);
+
+      if (isOpen) {
+        nav.classList.remove('nav--hidden');
+        document.addEventListener('keydown', handleKeydown);
+      } else {
+        document.removeEventListener('keydown', handleKeydown);
+      }
+
+      updateNavBackground();
+    };
 
     // Mobile menu toggle
     if (navToggle) {
       navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('nav__toggle--active');
-        navLinks.classList.toggle('nav__links--open');
+        const willOpen = !navLinks.classList.contains('nav__links--open');
+        setMenuState(willOpen);
       });
 
       // Close menu when clicking on a link
       const links = navLinks.querySelectorAll('.nav__link');
       links.forEach(link => {
         link.addEventListener('click', () => {
-          navToggle.classList.remove('nav__toggle--active');
-          navLinks.classList.remove('nav__links--open');
+          setMenuState(false);
         });
       });
 
       // Close menu when clicking outside
       document.addEventListener('click', (e) => {
         if (!nav.contains(e.target) && navLinks.classList.contains('nav__links--open')) {
-          navToggle.classList.remove('nav__toggle--active');
-          navLinks.classList.remove('nav__links--open');
+          setMenuState(false);
         }
       });
     }
@@ -52,6 +98,11 @@ class PortfolioApp {
       if (hero) {
         const heroObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
+            if (nav.classList.contains('nav--menu-open')) {
+              nav.classList.remove('nav--hidden');
+              return;
+            }
+
             if (entry.isIntersecting) {
               nav.classList.add('nav--hidden');
             } else {
@@ -68,16 +119,8 @@ class PortfolioApp {
     }
 
     // Update nav background/shadow on scroll (no hide-on-scroll)
-    window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > 100) {
-        nav.style.background = 'rgba(255, 255, 255, 0.98)';
-        nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-      } else {
-        nav.style.background = 'rgba(255, 255, 255, 0.95)';
-        nav.style.boxShadow = 'none';
-      }
-    });
+    window.addEventListener('scroll', updateNavBackground);
+    updateNavBackground();
 
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
