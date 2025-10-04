@@ -336,6 +336,7 @@ a {
 
 .hero__cta .btn {
   min-width: 160px;
+  flex: 1 1 200px;
 }
 
 .hero__stats {
@@ -491,7 +492,7 @@ a {
     grid-template-areas:
       "image text stats"
       "image cta stats";
-    column-gap: var(--space-4xl);
+    column-gap: var(--space-1xl);
     align-items: stretch;
   }
 
