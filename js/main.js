@@ -59,7 +59,8 @@ class PortfolioApp {
         e.preventDefault();
         const target = document.querySelector(anchor.getAttribute('href'));
         if (target) {
-          const offsetTop = target.offsetTop - 80;
+          // Use larger offset to account for nav height + padding (approximately 100px)
+          const offsetTop = target.offsetTop + 10;
           window.scrollTo({
             top: offsetTop,
             behavior: 'smooth'
