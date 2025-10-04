@@ -19,6 +19,32 @@ class PortfolioApp {
   setupNavigation() {
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+
+    // Mobile menu toggle
+    if (navToggle) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('nav__toggle--active');
+        navLinks.classList.toggle('nav__links--open');
+      });
+
+      // Close menu when clicking on a link
+      const links = navLinks.querySelectorAll('.nav__link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('nav__toggle--active');
+          navLinks.classList.remove('nav__links--open');
+        });
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && navLinks.classList.contains('nav__links--open')) {
+          navToggle.classList.remove('nav__toggle--active');
+          navLinks.classList.remove('nav__links--open');
+        }
+      });
+    }
 
     // Hide nav while hero is visible using IntersectionObserver
     try {
