@@ -235,18 +235,36 @@ class PortfolioApp {
         `;
         if (title === "Chevalet.co") {
             placeholderHtml = `
-                <div class="project-modal__slider">
-                    <button class="slider-btn slider-btn--prev" aria-label="Previous">&lt;</button>
-                    <div class="slider-track">
-                        <img src="public/chevalet_1.png" alt="Chevalet Screenshot 1" class="slider-img" />
-                        <img src="public/chevalet_2.png" alt="Chevalet Screenshot 2" class="slider-img" />
-                        <img src="public/chevalet_3.png" alt="Chevalet Screenshot 3" class="slider-img" />
+                <div class="project-modal__slider" role="region" aria-label="Image slideshow">
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <img src="public/chevalet_1.png" alt="Chevalet Screenshot 1" class="slider-img" loading="lazy" />
+                            <img src="public/chevalet_2.png" alt="Chevalet Screenshot 2" class="slider-img" loading="lazy" />
+                            <img src="public/chevalet_3.png" alt="Chevalet Screenshot 3" class="slider-img" loading="lazy" />
+                        </div>
+                        <button class="slider-btn slider-btn--prev" aria-label="Previous image" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 19.5-7.5-7.5 7.5-7.5" />
+                            </svg>
+                        </button>
+                        <button class="slider-btn slider-btn--next" aria-label="Next image">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                        <div class="slider-counter" aria-live="polite"><span class="current">1</span> / <span class="total">3</span></div>
+                        <button class="slider-fullscreen" aria-label="View fullscreen" title="View fullscreen">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                            </svg>
+                        </button>
                     </div>
-                    <button class="slider-btn slider-btn--next" aria-label="Next">&gt;</button>
+                    <div class="slider-controls">
+                        <div class="slider-dots" aria-label="Slide indicators"></div>
+                    </div>
                 </div>
             `;
         }
-
 
         modal.innerHTML = `
         <div class="project-modal__backdrop"></div>
@@ -311,13 +329,28 @@ class PortfolioApp {
             .project-modal__content {
               position: relative;
               background: white;
-              max-width: 720px;
+              max-width: 820px;
               width: 100%;
-              max-height: 80vh;
+              max-height: 90vh;
               overflow: hidden; /* keep rounded card clipped (topbar + body) */
               border-radius: 0px;
               animation: modalSlideUp 0.3s ease-out;
               box-shadow: 0 24px 48px rgba(0,0,0,0.25);
+            }
+
+            @media (max-width: 768px) {
+              .project-modal {
+                padding: 1rem;
+              }
+              
+              .project-modal__content {
+                max-height: 95vh;
+              }
+
+              .project-modal__body {
+                padding: 1rem 1.5rem 1.5rem;
+                max-height: calc(95vh - 56px);
+              }
             }
 
             /* Top bar: gradient left -> right */
@@ -431,48 +464,247 @@ class PortfolioApp {
               text-align: center;
               color: var(--color-gray-800);
             }
+
+            /* Professional slider styles */
             .project-modal__slider {
+                margin: 1.5rem 0;
+                position: relative;
+                width: 100%;
+            }
+
+            .slider-container {
+                position: relative;
+                width: 100%;
+                border-radius: 0px;
+                overflow: hidden;
+                background: var(--color-gray-100);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            }
+
+            .slider-track {
+                display: flex;
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                width: 100%;
+            }
+
+            .slider-img {
+                width: 100%;
+                height: auto;
+                min-height: 400px;
+                max-height: 500px;
+                object-fit: contain;
+                background: var(--color-gray-100);
+                flex-shrink: 0;
+                user-select: none;
+            }
+
+            /* Navigation controls overlay */
+            .slider-btn {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.95);
+                color: var(--color-primary);
+                border: 2px solid var(--color-gray-200);
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                opacity: 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 3;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.5rem;
-                margin: 0 auto;
-                max-width: 100%;
-                overflow: hidden;
-                position: relative;
-                padding: 1rem 0;
+                backdrop-filter: blur(8px);
+                box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+                padding: 0;
             }
-            .slider-track {
-                display: flex;
-                transition: transform 0.4s cubic-bezier(.4,0,.2,1);
-                width: 360px;
-                overflow: hidden;
+
+            .slider-btn svg {
+                width: 24px;
+                height: 24px;
+                display: block;
             }
-            .slider-img {
-                min-width: 360px;
-                max-width: 360px;
-                height: 220px;
-                object-fit: cover;
-                border-radius: 8px;
-                margin-right: 1rem;
-                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            }
-            .slider-btn {
-                background: #2563eb;
-                color: #fff;
-                border: none;
-                border-radius: 50%;
-                width: 36px;
-                height: 36px;
-                font-size: 1.5rem;
-                cursor: pointer;
-                opacity: 0.85;
-                transition: background 0.2s;
-                z-index: 2;
-            }
-            .slider-btn:hover {
-                background: #1e40af;
+
+            .slider-container:hover .slider-btn:not(:disabled) {
                 opacity: 1;
+            }
+
+            .slider-btn--prev {
+                left: 1rem;
+            }
+
+            .slider-btn--next {
+                right: 1rem;
+            }
+
+            .slider-btn:hover:not(:disabled) {
+                background: var(--color-accent);
+                color: var(--color-white);
+                border-color: var(--color-accent);
+                transform: translateY(-50%) scale(1.05);
+            }
+
+            .slider-btn:disabled {
+                opacity: 0 !important;
+                cursor: not-allowed;
+            }
+
+            /* Image counter */
+            .slider-counter {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: rgba(0, 0, 0, 0.75);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 0px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                font-family: var(--font-mono);
+                z-index: 3;
+                backdrop-filter: blur(8px);
+            }
+
+            /* Modern navigation controls footer */
+            .slider-controls {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1.25rem;
+                padding: 0 1rem;
+            }
+
+            .slider-dots {
+                display: flex;
+                gap: 0.625rem;
+                align-items: center;
+            }
+
+            .slider-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 0%;
+                background: var(--color-gray-300);
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+            }
+
+            .slider-dot:hover {
+                background: var(--color-gray-800);
+                transform: scale(1.2);
+            }
+
+            .slider-dot.active {
+                background: var(--color-accent);
+                width: 24px;
+                border-radius: 0px;
+            }
+
+            .slider-dot:focus {
+                outline: 2px solid var(--color-accent);
+                outline-offset: 2px;
+            }
+
+            /* Fullscreen button */
+            .slider-fullscreen {
+                position: absolute;
+                bottom: 1rem;
+                right: 1rem;
+                background: rgba(0, 0, 0, 0.75);
+                color: white;
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 0px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                transition: all 0.2s;
+                z-index: 3;
+                backdrop-filter: blur(8px);
+                padding: 0;
+            }
+
+            .slider-fullscreen svg {
+                width: 20px;
+                height: 20px;
+                display: block;
+            }
+
+            .slider-fullscreen:hover {
+                background: rgba(0, 0, 0, 0.9);
+                transform: scale(1.05);
+            }
+
+            /* Mobile optimizations */
+            @media (max-width: 768px) {
+                .slider-img {
+                    min-height: 280px;
+                    max-height: 350px;
+                }
+
+                .slider-btn {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 1.25rem;
+                    opacity: 1;
+                    background: rgba(255, 255, 255, 0.9);
+                }
+
+                .slider-btn svg {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                .slider-btn--prev {
+                    left: 0.5rem;
+                }
+
+                .slider-btn--next {
+                    right: 0.5rem;
+                }
+
+                .slider-counter {
+                    font-size: 0.75rem;
+                    padding: 0.375rem 0.75rem;
+                    top: 0.75rem;
+                    right: 0.75rem;
+                }
+
+                .slider-fullscreen {
+                    width: 36px;
+                    height: 36px;
+                    bottom: 0.75rem;
+                    right: 0.75rem;
+                }
+            }
+
+            /* Animations */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
             }
       `;
 
@@ -483,31 +715,180 @@ class PortfolioApp {
             document.head.appendChild(styleSheet);
         }
 
-document.body.appendChild(modal);
-document.body.style.overflow = "hidden";
+        document.body.appendChild(modal);
+        document.body.style.overflow = "hidden";
 
-// Slider logic for Chevalet.co modal
-if (title === "Chevalet.co") {
-    const track = modal.querySelector('.slider-track');
-    const imgs = modal.querySelectorAll('.slider-img');
-    const prevBtn = modal.querySelector('.slider-btn--prev');
-    const nextBtn = modal.querySelector('.slider-btn--next');
-    let idx = 0;
-    function updateSlider() {
-        track.style.transform = `translateX(-${idx * 360}px)`;
-        prevBtn.disabled = idx === 0;
-        nextBtn.disabled = idx === imgs.length - 1;
-    }
-    prevBtn.addEventListener('click', () => {
-        if (idx > 0) idx--;
-        updateSlider();
-    });
-    nextBtn.addEventListener('click', () => {
-        if (idx < imgs.length - 1) idx++;
-        updateSlider();
-    });
-    updateSlider();
-}
+        // Enhanced slider logic for Chevalet.co modal
+        if (title === "Chevalet.co") {
+            const sliderContainer = modal.querySelector('.slider-container');
+            const track = modal.querySelector('.slider-track');
+            const imgs = modal.querySelectorAll('.slider-img');
+            const prevBtn = modal.querySelector('.slider-btn--prev');
+            const nextBtn = modal.querySelector('.slider-btn--next');
+            const dotsContainer = modal.querySelector('.slider-dots');
+            const counter = modal.querySelector('.slider-counter');
+            const currentSpan = counter.querySelector('.current');
+            const fullscreenBtn = modal.querySelector('.slider-fullscreen');
+            
+            let idx = 0;
+            let isTransitioning = false;
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            // Create dots with enhanced interaction
+            imgs.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'slider-dot';
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.setAttribute('role', 'tab');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+            const dots = modal.querySelectorAll('.slider-dot');
+
+            function updateSlider() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                
+                // Smooth transition
+                track.style.transform = `translateX(-${idx * 100}%)`;
+                
+                // Update controls
+                prevBtn.disabled = idx === 0;
+                nextBtn.disabled = idx === imgs.length - 1;
+                
+                // Update dots with animation
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === idx);
+                    dot.setAttribute('aria-selected', i === idx);
+                });
+                
+                // Update counter
+                currentSpan.textContent = idx + 1;
+                
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 500);
+            }
+
+            function goToSlide(newIdx) {
+                if (newIdx < 0 || newIdx >= imgs.length || newIdx === idx) return;
+                idx = newIdx;
+                updateSlider();
+            }
+
+            // Button navigation
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(idx - 1);
+            });
+            
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(idx + 1);
+            });
+
+            // Keyboard navigation
+            const keyHandler = (e) => {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goToSlide(idx - 1);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    goToSlide(idx + 1);
+                }
+            };
+            document.addEventListener('keydown', keyHandler);
+
+            // Enhanced touch/swipe support
+            const handleTouchStart = (e) => {
+                touchStartX = e.touches[0].clientX;
+            };
+
+            const handleTouchMove = (e) => {
+                touchEndX = e.touches[0].clientX;
+            };
+
+            const handleTouchEnd = () => {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // Swipe left - next
+                        goToSlide(idx + 1);
+                    } else {
+                        // Swipe right - previous
+                        goToSlide(idx - 1);
+                    }
+                }
+                
+                touchStartX = 0;
+                touchEndX = 0;
+            };
+
+            sliderContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+            sliderContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
+            sliderContainer.addEventListener('touchend', handleTouchEnd);
+
+            // Fullscreen functionality
+            fullscreenBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const currentImg = imgs[idx];
+                
+                // Create fullscreen overlay
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.95);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: zoom-out;
+                    animation: fadeIn 0.2s ease-out;
+                `;
+                
+                const fullImg = document.createElement('img');
+                fullImg.src = currentImg.src;
+                fullImg.alt = currentImg.alt;
+                fullImg.style.cssText = `
+                    max-width: 95%;
+                    max-height: 95%;
+                    object-fit: contain;
+                    border-radius: 0px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                `;
+                
+                overlay.appendChild(fullImg);
+                document.body.appendChild(overlay);
+                
+                const closeFullscreen = () => {
+                    overlay.style.animation = 'fadeOut 0.2s ease-out';
+                    setTimeout(() => overlay.remove(), 200);
+                };
+                
+                overlay.addEventListener('click', closeFullscreen);
+                document.addEventListener('keydown', function escFullscreen(e) {
+                    if (e.key === 'Escape') {
+                        closeFullscreen();
+                        document.removeEventListener('keydown', escFullscreen);
+                    }
+                });
+            });
+
+            // Cleanup on modal close
+            modal.addEventListener('remove', () => {
+                document.removeEventListener('keydown', keyHandler);
+            });
+
+            // Initialize
+            updateSlider();
+        }
 
         // Close modal handlers
         const closeModal = () => {
