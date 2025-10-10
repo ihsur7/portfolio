@@ -231,7 +231,7 @@ class PortfolioApp {
 
         // Detect Chevalet.co project by title or URL
         let placeholderHtml = `
-            <p>Additional Information will be <strong>available soon</strong>.</p>
+            
         `;
         if (title === "Chevalet.co") {
             placeholderHtml = `
@@ -459,8 +459,6 @@ class PortfolioApp {
 
             .project-modal__placeholder {
               margin-top: 1.5rem;
-              padding: 1.25rem;
-              background: var(--color-gray-100);
               text-align: center;
               color: var(--color-gray-800);
             }

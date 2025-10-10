@@ -738,6 +738,29 @@ a {
         var(--color-white)
     );
     opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.work__item-image .github-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    transition: all var(--transition-base);
+    opacity: 0.8;
+}
+
+.work__item-image .github-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.work__item-image .github-icon svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--color-white);
 }
 
 .work__item-image img {
