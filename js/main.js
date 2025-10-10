@@ -229,6 +229,25 @@ class PortfolioApp {
             ? `<a href="${projectUrl}" class="btn btn--primary project-modal__visit" target="_blank" rel="noopener noreferrer" aria-label="Visit ${title}">Visit</a>`
             : "";
 
+        // Detect Chevalet.co project by title or URL
+        let placeholderHtml = `
+            <p>Additional project artifacts, screenshots or case study links can go here.</p>
+        `;
+        if (title === "Chevalet.co") {
+            placeholderHtml = `
+                <div class="project-modal__slider">
+                    <button class="slider-btn slider-btn--prev" aria-label="Previous">&lt;</button>
+                    <div class="slider-track">
+                        <img src="public/chevalet_1.png" alt="Chevalet Screenshot 1" class="slider-img" />
+                        <img src="public/chevalet_2.png" alt="Chevalet Screenshot 2" class="slider-img" />
+                        <img src="public/chevalet_3.png" alt="Chevalet Screenshot 3" class="slider-img" />
+                    </div>
+                    <button class="slider-btn slider-btn--next" aria-label="Next">&gt;</button>
+                </div>
+            `;
+        }
+
+
         modal.innerHTML = `
         <div class="project-modal__backdrop"></div>
         <div class="project-modal__content">
@@ -257,7 +276,7 @@ class PortfolioApp {
             ${techTagsHtml ? `<div class="project-modal__tech"><h3>Tech</h3><div class="project-modal__tech-list">${techTagsHtml}</div></div>` : ""}
 
             <div class="project-modal__placeholder">
-              <p>Additional project artifacts, screenshots or case study links can go here.</p>
+              ${placeholderHtml}
             </div>
           </div>
         </div>
@@ -412,6 +431,49 @@ class PortfolioApp {
               text-align: center;
               color: var(--color-gray-800);
             }
+            .project-modal__slider {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                margin: 0 auto;
+                max-width: 100%;
+                overflow: hidden;
+                position: relative;
+                padding: 1rem 0;
+            }
+            .slider-track {
+                display: flex;
+                transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+                width: 360px;
+                overflow: hidden;
+            }
+            .slider-img {
+                min-width: 360px;
+                max-width: 360px;
+                height: 220px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-right: 1rem;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            }
+            .slider-btn {
+                background: #2563eb;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                opacity: 0.85;
+                transition: background 0.2s;
+                z-index: 2;
+            }
+            .slider-btn:hover {
+                background: #1e40af;
+                opacity: 1;
+            }
       `;
 
         if (!document.querySelector("#modal-styles")) {
@@ -421,8 +483,31 @@ class PortfolioApp {
             document.head.appendChild(styleSheet);
         }
 
-        document.body.appendChild(modal);
-        document.body.style.overflow = "hidden";
+document.body.appendChild(modal);
+document.body.style.overflow = "hidden";
+
+// Slider logic for Chevalet.co modal
+if (title === "Chevalet.co") {
+    const track = modal.querySelector('.slider-track');
+    const imgs = modal.querySelectorAll('.slider-img');
+    const prevBtn = modal.querySelector('.slider-btn--prev');
+    const nextBtn = modal.querySelector('.slider-btn--next');
+    let idx = 0;
+    function updateSlider() {
+        track.style.transform = `translateX(-${idx * 360}px)`;
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx === imgs.length - 1;
+    }
+    prevBtn.addEventListener('click', () => {
+        if (idx > 0) idx--;
+        updateSlider();
+    });
+    nextBtn.addEventListener('click', () => {
+        if (idx < imgs.length - 1) idx++;
+        updateSlider();
+    });
+    updateSlider();
+}
 
         // Close modal handlers
         const closeModal = () => {
