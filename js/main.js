@@ -231,7 +231,7 @@ class PortfolioApp {
 
         // Detect Chevalet.co project by title or URL
         let placeholderHtml = `
-            <p>Additional project artifacts, screenshots or case study links can go here.</p>
+            <p>Additional Information will be <strong>available soon</strong>.</p>
         `;
         if (title === "Chevalet.co") {
             placeholderHtml = `
@@ -467,7 +467,6 @@ class PortfolioApp {
 
             /* Professional slider styles */
             .project-modal__slider {
-                margin: 1.5rem 0;
                 position: relative;
                 width: 100%;
             }
