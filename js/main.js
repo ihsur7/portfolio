@@ -727,7 +727,6 @@ class PortfolioApp {
             const fullscreenBtn = modal.querySelector('.slider-fullscreen');
             
             let idx = 0;
-            let isTransitioning = false;
             let touchStartX = 0;
             let touchEndX = 0;
 
@@ -743,28 +742,18 @@ class PortfolioApp {
             const dots = modal.querySelectorAll('.slider-dot');
 
             function updateSlider() {
-                if (isTransitioning) return;
-                isTransitioning = true;
-                
-                // Smooth transition
+                // Remove isTransitioning logic
                 track.style.transform = `translateX(-${idx * 100}%)`;
-                
-                // Update controls
+
                 prevBtn.disabled = idx === 0;
                 nextBtn.disabled = idx === imgs.length - 1;
-                
-                // Update dots with animation
+
                 dots.forEach((dot, i) => {
                     dot.classList.toggle('active', i === idx);
                     dot.setAttribute('aria-selected', i === idx);
                 });
-                
-                // Update counter
+
                 currentSpan.textContent = idx + 1;
-                
-                setTimeout(() => {
-                    isTransitioning = false;
-                }, 500);
             }
 
             function goToSlide(newIdx) {
@@ -773,7 +762,6 @@ class PortfolioApp {
                 } else if (newIdx >= imgs.length) {
                     newIdx = imgs.length - 1;
                 }
-
                 if (newIdx === idx) return;
                 idx = newIdx;
                 updateSlider();
@@ -784,7 +772,7 @@ class PortfolioApp {
                 e.stopPropagation();
                 goToSlide(idx - 1);
             });
-            
+
             nextBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 goToSlide(idx + 1);
