@@ -287,6 +287,7 @@ a {
     overflow: hidden;
     padding-top: calc(var(--space-3xl) + 56px);
     padding-bottom: var(--space-3xl);
+    background: #f3f4f6;
 }
 
 .hero__background {

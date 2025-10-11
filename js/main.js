@@ -11,7 +11,6 @@ class PortfolioApp {
         this.setupWorkItemInteractions();
         this.setupParallaxEffects();
         // this.setupTypewriterEffect();
-        setupPlusGridBackground();
         setupNavScrollSpy();
     }
 
@@ -1129,350 +1128,412 @@ class PerformanceOptimizer {
 }
 
 // ===== PLUS GRID BACKGROUND ===== //
-function setupPlusGridBackground() {
-    const hero = document.getElementById("hero");
-    if (!hero) return;
+// function setupPlusGridBackground() {
+//     const hero = document.getElementById("hero");
+//     if (!hero) return;
 
-    // Configurable variables
-    const PLUS_GRID_CONFIG = {
-        cellSize: 32, // px
-        color: "#2563eb",
-        accentColor: "#ff6b35", // Accent color for closest plus
-    baseOpacity: 0.02,
-    highlightOpacity: 0.65,
-        fontSize: 18,
-        fontWeight: 700,
-        letterSpacing: 1,
-        transition: "transform 0.18s ease-out, opacity 0.18s, color 0.18s ease-out",
-        blendMode: "luminosity",
-        maxScale: 1.5,
-        influenceRadius: 3, // cells
-        // square symbol
-        // filled square 
-        symbol: "■",
-        // symbol: "□", // Character used for each grid element
-    // symbol: "+", // Character used for each grid element
-        // Noise animation settings
-        noiseScale: 0.5, // Scale of noise (smaller = larger patterns)
-        noiseSpeed: 0.000015, // Animation speed (slower)
-    noiseScaleAmount: 5, // Max scale deviation from the neutral scale (bidirectional)
-    noiseOpacityAmount: 0.3, // Max opacity variation from noise
-        noiseTransition: "transform 0.3s ease-out, opacity 0.3s ease-out, color 0.3s ease-out",
-        noiseSmoothing: 0.01, // Lerp factor for smoothing noise animation
-        noiseContrastPower: 1.7, // Power for shaping noise response ( >1 accentuates extremes )
-    };
+//     // Configurable variables
+//     const PLUS_GRID_CONFIG = {
+//         cellSize: 32, // px
+//         color: "#2563eb",
+//         accentColor: "#ff6b35", // Accent color for closest plus
+//         baseOpacity: 0.02,
+//         highlightOpacity: 0.65,
+//         fontSize: 18,
+//         fontWeight: 700,
+//         letterSpacing: 1,
+//         transition:
+//             "transform 0.18s ease-out, opacity 0.18s, color 0.18s ease-out",
+//         blendMode: "luminosity",
+//         maxScale: 1.5,
+//         influenceRadius: 3, // cells
+//         // square symbol
+//         // filled square
+//         symbol: "■",
+//         // symbol: "□", // Character used for each grid element
+//         // symbol: "+", // Character used for each grid element
+//         // Noise animation settings
+//         noiseScale: 0.5, // Scale of noise (smaller = larger patterns)
+//         noiseSpeed: 0.000015, // Animation speed (slower)
+//         noiseScaleAmount: 5, // Max scale deviation from the neutral scale (bidirectional)
+//         noiseOpacityAmount: 0.3, // Max opacity variation from noise
+//         noiseTransition:
+//             "transform 0.3s ease-out, opacity 0.3s ease-out, color 0.3s ease-out",
+//         noiseSmoothing: 0.01, // Lerp factor for smoothing noise animation
+//         noiseContrastPower: 1.7, // Power for shaping noise response ( >1 accentuates extremes )
+//     };
 
-    // Create grid container
-    let grid = document.createElement("div");
-    grid.className = "plus-grid-bg";
-    grid.style.position = "absolute";
-    grid.style.left = "0";
-    grid.style.top = "0";
-    grid.style.width = "100%";
-    grid.style.height = "100%";
-    grid.style.zIndex = "0";
-    grid.style.overflow = "hidden";
-    grid.style.pointerEvents = "none";
-    grid.style.mixBlendMode = PLUS_GRID_CONFIG.blendMode;
-    hero.prepend(grid);
+//     // Create grid container
+//     let grid = document.createElement("div");
+//     grid.className = "plus-grid-bg";
+//     grid.style.position = "absolute";
+//     grid.style.left = "0";
+//     grid.style.top = "0";
+//     grid.style.width = "100%";
+//     grid.style.height = "100%";
+//     grid.style.zIndex = "0";
+//     grid.style.overflow = "hidden";
+//     grid.style.pointerEvents = "none";
+//     grid.style.mixBlendMode = PLUS_GRID_CONFIG.blendMode;
+//     hero.prepend(grid);
 
-    let plusEls = [];
-    let plusStates = [];
-    let cols = 0,
-        rows = 0;
-    let isMouseActive = false;
-    let mouseIdleTimeout = null;
-    let noiseAnimationFrame = null;
-    let noiseTime = 0;
+//     let plusEls = [];
+//     const plusStates = [];
+//     const plusCenters = [];
+//     const plusGridCoords = [];
+//     let cols = 0,
+//         rows = 0;
+//     let isMouseActive = false;
+//     let mouseIdleTimeout = null;
+//     let noiseAnimationFrame = null;
+//     let noiseTime = 0;
+//     let lastNoiseFrame = 0;
+//     const highlightState = {
+//         x: 0,
+//         y: 0,
+//         dirty: false,
+//         hasPointer: false,
+//     };
 
-    // Simple 2D noise function (Perlin-like)
-    function noise2D(x, y) {
-        // Simple pseudo-random noise based on sine
-        const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-        return n - Math.floor(n);
-    }
+//     // Simple 2D noise function (Perlin-like)
+//     function noise2D(x, y) {
+//         // Simple pseudo-random noise based on sine
+//         const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+//         return n - Math.floor(n);
+//     }
 
-    // Fractal noise (multiple octaves)
-    function fractalNoise(x, y, time) {
-        let value = 0;
-        let amplitude = 1;
-        let frequency = 1;
-        let maxValue = 0;
+//     // Fractal noise (multiple octaves)
+//     function fractalNoise(x, y, time) {
+//         let value = 0;
+//         let amplitude = 1;
+//         let frequency = 1;
+//         let maxValue = 0;
 
-        // 3 octaves of noise
-        for (let i = 0; i < 3; i++) {
-            value += amplitude * noise2D(
-                x * frequency + time * 0.5,
-                y * frequency + time * 0.3
-            );
-            maxValue += amplitude;
-            amplitude *= 0.5;
-            frequency *= 2;
-        }
+//         // 3 octaves of noise
+//         for (let i = 0; i < 3; i++) {
+//             value += amplitude * noise2D(
+//                 x * frequency + time * 0.5,
+//                 y * frequency + time * 0.3
+//             );
+//             maxValue += amplitude;
+//             amplitude *= 0.5;
+//             frequency *= 2;
+//         }
 
-        return value / maxValue;
-    }
+//         return value / maxValue;
+//     }
 
-    function shapeNoiseValue(value) {
-        // Clamp to [0,1] just in case
-        const clamped = Math.max(0, Math.min(1, value));
-        // Use a more aggressive contrast curve and center the output
-        const centered = (clamped - 0.5) * 2; // [-1, 1]
-        const power = Math.max(1, PLUS_GRID_CONFIG.noiseContrastPower);
-        // Use a sigmoid for more spread, then power for contrast
-        const sigmoid = centered / (1 + Math.abs(centered)); // [-1,1] but more spread
-        const shaped = Math.sign(sigmoid) * Math.pow(Math.abs(sigmoid), power);
-        return shaped * 0.5 + 0.5; // back to [0,1]
-    }
+//     function shapeNoiseValue(value) {
+//         // Clamp to [0,1] just in case
+//         const clamped = Math.max(0, Math.min(1, value));
+//         // Use a more aggressive contrast curve and center the output
+//         const centered = (clamped - 0.5) * 2; // [-1, 1]
+//         const power = Math.max(1, PLUS_GRID_CONFIG.noiseContrastPower);
+//         // Use a sigmoid for more spread, then power for contrast
+//         const sigmoid = centered / (1 + Math.abs(centered)); // [-1,1] but more spread
+//         const shaped = Math.sign(sigmoid) * Math.pow(Math.abs(sigmoid), power);
+//         return shaped * 0.5 + 0.5; // back to [0,1]
+//     }
 
-    function renderGrid() {
-    plusEls.forEach((el) => el.remove());
-    plusEls = [];
-    plusStates = [];
-        const rect = hero.getBoundingClientRect();
-        cols = Math.ceil(rect.width / PLUS_GRID_CONFIG.cellSize);
-        rows = Math.ceil(rect.height / PLUS_GRID_CONFIG.cellSize);
-        grid.style.width = rect.width + "px";
-        grid.style.height = rect.height + "px";
-        for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < cols; col++) {
-                const plus = document.createElement("span");
-                plus.textContent = PLUS_GRID_CONFIG.symbol;
-                plus.style.position = "absolute";
-                plus.style.left = col * PLUS_GRID_CONFIG.cellSize + "px";
-                plus.style.top = row * PLUS_GRID_CONFIG.cellSize + "px";
-                plus.style.width = PLUS_GRID_CONFIG.cellSize + "px";
-                plus.style.height = PLUS_GRID_CONFIG.cellSize + "px";
-                plus.style.display = "flex";
-                plus.style.alignItems = "center";
-                plus.style.justifyContent = "center";
-                plus.style.fontSize = PLUS_GRID_CONFIG.fontSize + "px";
-                plus.style.color = PLUS_GRID_CONFIG.color;
-                plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
-                plus.style.transition = PLUS_GRID_CONFIG.transition;
-                plus.style.fontWeight = PLUS_GRID_CONFIG.fontWeight;
-                plus.style.letterSpacing =
-                    PLUS_GRID_CONFIG.letterSpacing + "px";
-                plus.style.userSelect = "none";
-                plus.style.pointerEvents = "none";
-                plus.style.transformOrigin = "center center";
-                plus.style.transform = "scale(1)";
-                plusEls.push(plus);
-                plusStates.push({
-                    scale: 1,
-                    opacity: PLUS_GRID_CONFIG.baseOpacity,
-                });
-                grid.appendChild(plus);
-            }
-        }
-    }
+//     function renderGrid() {
+//         stopNoiseAnimation();
 
-    function animateNoise() {
-        if (isMouseActive) return;
+//         grid.textContent = "";
+//         plusEls = [];
+//         plusStates.length = 0;
+//         plusCenters.length = 0;
+//         plusGridCoords.length = 0;
 
-        noiseTime += PLUS_GRID_CONFIG.noiseSpeed;
+//         const rect = hero.getBoundingClientRect();
+//         cols = Math.ceil(rect.width / PLUS_GRID_CONFIG.cellSize);
+//         rows = Math.ceil(rect.height / PLUS_GRID_CONFIG.cellSize);
+//         grid.style.width = `${rect.width}px`;
+//         grid.style.height = `${rect.height}px`;
 
-        plusEls.forEach((plus, i) => {
-            const row = Math.floor(i / cols);
-            const col = i % cols;
+//         const fragment = document.createDocumentFragment();
 
-            // Get noise value for this position
-            const noiseValue = fractalNoise(
-                col * PLUS_GRID_CONFIG.noiseScale,
-                row * PLUS_GRID_CONFIG.noiseScale,
-                noiseTime
-            );
+//         for (let row = 0; row < rows; row++) {
+//             for (let col = 0; col < cols; col++) {
+//                 const left = col * PLUS_GRID_CONFIG.cellSize;
+//                 const top = row * PLUS_GRID_CONFIG.cellSize;
+//                 const plus = document.createElement("span");
+//                 plus.textContent = PLUS_GRID_CONFIG.symbol;
+//                 plus.style.position = "absolute";
+//                 plus.style.left = `${left}px`;
+//                 plus.style.top = `${top}px`;
+//                 plus.style.width = `${PLUS_GRID_CONFIG.cellSize}px`;
+//                 plus.style.height = `${PLUS_GRID_CONFIG.cellSize}px`;
+//                 plus.style.display = "flex";
+//                 plus.style.alignItems = "center";
+//                 plus.style.justifyContent = "center";
+//                 plus.style.fontSize = `${PLUS_GRID_CONFIG.fontSize}px`;
+//                 plus.style.color = PLUS_GRID_CONFIG.color;
+//                 plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
+//                 plus.style.transition = PLUS_GRID_CONFIG.transition;
+//                 plus.style.fontWeight = PLUS_GRID_CONFIG.fontWeight;
+//                 plus.style.letterSpacing = `${PLUS_GRID_CONFIG.letterSpacing}px`;
+//                 plus.style.userSelect = "none";
+//                 plus.style.pointerEvents = "none";
+//                 plus.style.transformOrigin = "center center";
+//                 plus.style.transform = "scale(1)";
 
-            const contrastNoise = shapeNoiseValue(noiseValue);
+//                 fragment.appendChild(plus);
+//                 plusEls.push(plus);
+//                 plusStates.push({
+//                     scale: 1,
+//                     opacity: PLUS_GRID_CONFIG.baseOpacity,
+//                 });
+//                 plusCenters.push(
+//                     left + PLUS_GRID_CONFIG.cellSize / 2,
+//                     top + PLUS_GRID_CONFIG.cellSize / 2,
+//                 );
+//                 plusGridCoords.push(row, col);
+//             }
+//         }
 
-            // Map shaped noise (0-1) to scale and opacity
-            const scaleVariation =
-                (contrastNoise - 0.5) * 2 * PLUS_GRID_CONFIG.noiseScaleAmount;
-            const targetScale = Math.max(
-                0.2,
-                1 + scaleVariation,
-            );
-            const targetOpacity = Math.max(
-                0.2,
-                contrastNoise * PLUS_GRID_CONFIG.noiseOpacityAmount,
-            );
-            // const targetOpacity = Math.min(
-            //     1,
-            //     Math.max(
-            //         0,
-                    
-            //             contrastNoise * PLUS_GRID_CONFIG.noiseOpacityAmount,
-            //     ),
-            // );
+//         grid.appendChild(fragment);
 
-            const state = plusStates[i];
-            if (state) {
-                state.scale +=
-                    (targetScale - state.scale) *
-                    PLUS_GRID_CONFIG.noiseSmoothing;
-                state.opacity +=
-                    (targetOpacity - state.opacity) *
-                    PLUS_GRID_CONFIG.noiseSmoothing;
-            }
+//         if (isMouseActive && highlightState.hasPointer) {
+//             requestAnimationFrame(applyHighlight);
+//         } else if (!isMouseActive) {
+//             startNoiseAnimation();
+//         }
+//     }
 
-            const appliedScale = state ? state.scale : targetScale;
-            const appliedOpacity = state ? state.opacity : targetOpacity;
+//     function animateNoise(timestamp) {
+//         if (isMouseActive || plusEls.length === 0) return;
 
-            plus.style.transform = `scale(${appliedScale})`;
-            plus.style.opacity = appliedOpacity;
-            plus.style.color = PLUS_GRID_CONFIG.color;
-        });
+//         if (!lastNoiseFrame || timestamp - lastNoiseFrame > 1000 / 30) {
+//             noiseTime += PLUS_GRID_CONFIG.noiseSpeed;
 
-        noiseAnimationFrame = requestAnimationFrame(animateNoise);
-    }
+//             for (let i = 0; i < plusEls.length; i++) {
+//                 const row = plusGridCoords[i * 2];
+//                 const col = plusGridCoords[i * 2 + 1];
 
-    function startNoiseAnimation() {
-        if (noiseAnimationFrame) return;
-        isMouseActive = false;
+//                 const noiseValue = fractalNoise(
+//                     col * PLUS_GRID_CONFIG.noiseScale,
+//                     row * PLUS_GRID_CONFIG.noiseScale,
+//                     noiseTime,
+//                 );
+
+//                 const contrastNoise = shapeNoiseValue(noiseValue);
+
+//                 const scaleVariation =
+//                     (contrastNoise - 0.5) * 2 *
+//                     PLUS_GRID_CONFIG.noiseScaleAmount;
+//                 const targetScale = Math.max(0.2, 1 + scaleVariation);
+//                 const targetOpacity = Math.max(
+//                     0.2,
+//                     contrastNoise * PLUS_GRID_CONFIG.noiseOpacityAmount,
+//                 );
+
+//                 const state = plusStates[i];
+//                 if (state) {
+//                     state.scale +=
+//                         (targetScale - state.scale) *
+//                         PLUS_GRID_CONFIG.noiseSmoothing;
+//                     state.opacity +=
+//                         (targetOpacity - state.opacity) *
+//                         PLUS_GRID_CONFIG.noiseSmoothing;
+//                 }
+
+//                 const appliedScale = state ? state.scale : targetScale;
+//                 const appliedOpacity = state ? state.opacity : targetOpacity;
+//                 const plus = plusEls[i];
+//                 plus.style.transform = `scale(${appliedScale})`;
+//                 plus.style.opacity = appliedOpacity;
+//                 if (plus.style.color !== PLUS_GRID_CONFIG.color) {
+//                     plus.style.color = PLUS_GRID_CONFIG.color;
+//                 }
+//             }
+
+//             lastNoiseFrame = timestamp;
+//         }
+
+//         noiseAnimationFrame = requestAnimationFrame(animateNoise);
+//     }
+
+//     function startNoiseAnimation() {
+//         if (noiseAnimationFrame) return;
+//         isMouseActive = false;
+//         lastNoiseFrame = 0;
+//         highlightState.dirty = false;
+//         highlightState.hasPointer = false;
         
-        // Enable smooth transitions for noise animation
-        plusEls.forEach((plus) => {
-            plus.style.transition = PLUS_GRID_CONFIG.noiseTransition;
-        });
+//         // Enable smooth transitions for noise animation
+//         plusEls.forEach((plus) => {
+//             plus.style.transition = PLUS_GRID_CONFIG.noiseTransition;
+//         });
         
-        animateNoise();
-    }
+//         animateNoise();
+//     }
 
-    function stopNoiseAnimation() {
-        if (noiseAnimationFrame) {
-            cancelAnimationFrame(noiseAnimationFrame);
-            noiseAnimationFrame = null;
-        }
+//     function stopNoiseAnimation() {
+//         if (noiseAnimationFrame) {
+//             cancelAnimationFrame(noiseAnimationFrame);
+//             noiseAnimationFrame = null;
+//         }
         
-        // Switch to faster transitions for mouse interaction
-        plusEls.forEach((plus) => {
-            plus.style.transition = PLUS_GRID_CONFIG.transition;
-        });
-    }
+//         // Switch to faster transitions for mouse interaction
+//         plusEls.forEach((plus) => {
+//             plus.style.transition = PLUS_GRID_CONFIG.transition;
+//         });
+//     }
 
-    function highlightGrid(e) {
-        const rect = hero.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        // Find the closest plus
-        let closestDistance = Infinity;
-        let closestIndex = -1;
-        
-        plusEls.forEach((plus, i) => {
-            const row = Math.floor(i / cols);
-            const col = i % cols;
-            
-            // Calculate the center position of this plus
-            const plusCenterX = col * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
-            const plusCenterY = row * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
-            
-            // Calculate distance from cursor to plus center
-            const dx = x - plusCenterX;
-            const dy = y - plusCenterY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = i;
-            }
-        });
-        
-        // Apply scale and color to all plusses
-        plusEls.forEach((plus, i) => {
-            const row = Math.floor(i / cols);
-            const col = i % cols;
-            
-            // Calculate the center position of this plus
-            const plusCenterX = col * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
-            const plusCenterY = row * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
-            
-            // Calculate distance from cursor to plus center
-            const dx = x - plusCenterX;
-            const dy = y - plusCenterY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // Calculate distance in cell units
-            const cellDistance = distance / PLUS_GRID_CONFIG.cellSize;
-            
-            // Calculate scale and opacity based on distance (closer = larger scale & higher opacity)
-            let scale = 1;
-            let opacity = PLUS_GRID_CONFIG.baseOpacity;
-            
-            if (cellDistance < PLUS_GRID_CONFIG.influenceRadius) {
-                // Smooth falloff from maxScale to 1.0 over the influence radius
-                const falloff = 1 - (cellDistance / PLUS_GRID_CONFIG.influenceRadius);
-                scale = 1 + (PLUS_GRID_CONFIG.maxScale - 1) * falloff;
-                
-                // Taper opacity along with scale
-                opacity = PLUS_GRID_CONFIG.baseOpacity + 
-                         (PLUS_GRID_CONFIG.highlightOpacity - PLUS_GRID_CONFIG.baseOpacity) * falloff;
-            }
-            
-            // Apply color: accent for closest, base for others
-            const color = (i === closestIndex) ? PLUS_GRID_CONFIG.accentColor : PLUS_GRID_CONFIG.color;
-            
-            plus.style.transform = `scale(${scale})`;
-            plus.style.color = color;
-            plus.style.opacity = opacity;
+//     function applyHighlight() {
+//         highlightState.dirty = false;
+//         if (!plusEls.length || !highlightState.hasPointer) return;
 
-            const state = plusStates[i];
-            if (state) {
-                state.scale = scale;
-                state.opacity = opacity;
-            }
-        });
-    }
+//         const rect = hero.getBoundingClientRect();
+//         const x = highlightState.x - rect.left;
+//         const y = highlightState.y - rect.top;
+//         const radiusPx =
+//             PLUS_GRID_CONFIG.influenceRadius * PLUS_GRID_CONFIG.cellSize;
+//         const radiusSq = radiusPx * radiusPx;
 
-    renderGrid();
-    window.addEventListener("resize", renderGrid);
+//         let closestIndex = -1;
+//         let closestDistanceSq = Infinity;
+
+//         for (let i = 0; i < plusEls.length; i++) {
+//             const centerX = plusCenters[i * 2];
+//             const centerY = plusCenters[i * 2 + 1];
+//             const dx = x - centerX;
+//             const dy = y - centerY;
+//             const distanceSq = dx * dx + dy * dy;
+
+//             if (distanceSq < closestDistanceSq) {
+//                 closestDistanceSq = distanceSq;
+//                 closestIndex = i;
+//             }
+
+//             const state = plusStates[i];
+//             if (!state) continue;
+
+//             let scale = 1;
+//             let opacity = PLUS_GRID_CONFIG.baseOpacity;
+
+//             if (distanceSq < radiusSq) {
+//                 const distance = Math.sqrt(distanceSq);
+//                 const cellDistance =
+//                     distance / PLUS_GRID_CONFIG.cellSize;
+//                 if (cellDistance < PLUS_GRID_CONFIG.influenceRadius) {
+//                     const falloff =
+//                         1 - cellDistance / PLUS_GRID_CONFIG.influenceRadius;
+//                     scale =
+//                         1 + (PLUS_GRID_CONFIG.maxScale - 1) * falloff;
+//                     opacity =
+//                         PLUS_GRID_CONFIG.baseOpacity +
+//                         (PLUS_GRID_CONFIG.highlightOpacity -
+//                             PLUS_GRID_CONFIG.baseOpacity) *
+//                             falloff;
+//                 }
+//             }
+
+//             if (state.scale !== scale || state.opacity !== opacity) {
+//                 state.scale = scale;
+//                 state.opacity = opacity;
+//                 const plus = plusEls[i];
+//                 plus.style.transform = `scale(${scale})`;
+//                 plus.style.opacity = opacity;
+//             }
+
+//             const plus = plusEls[i];
+//             if (plus.style.color !== PLUS_GRID_CONFIG.color) {
+//                 plus.style.color = PLUS_GRID_CONFIG.color;
+//             }
+//         }
+
+//         if (closestIndex >= 0 && plusEls[closestIndex]) {
+//             const plus = plusEls[closestIndex];
+//             if (plus.style.color !== PLUS_GRID_CONFIG.accentColor) {
+//                 plus.style.color = PLUS_GRID_CONFIG.accentColor;
+//             }
+//         }
+//     }
+
+//     function scheduleHighlight(e) {
+//         highlightState.x = e.clientX;
+//         highlightState.y = e.clientY;
+//         highlightState.hasPointer = true;
+//         if (!highlightState.dirty) {
+//             highlightState.dirty = true;
+//             requestAnimationFrame(applyHighlight);
+//         }
+//     }
+
+//     renderGrid();
+
+//     let pendingResize = false;
+//     const handleResize = () => {
+//         if (pendingResize) return;
+//         pendingResize = true;
+//         requestAnimationFrame(() => {
+//             pendingResize = false;
+//             renderGrid();
+//         });
+//     };
+
+//     if (typeof ResizeObserver !== "undefined") {
+//         const resizeObserver = new ResizeObserver(() => handleResize());
+//         resizeObserver.observe(hero);
+//     } else {
+//         window.addEventListener("resize", handleResize, { passive: true });
+//     }
     
-    hero.addEventListener("mouseenter", () => {
-        stopNoiseAnimation();
-        isMouseActive = true;
-        // Clear any pending idle timeout
-        if (mouseIdleTimeout) {
-            clearTimeout(mouseIdleTimeout);
-            mouseIdleTimeout = null;
-        }
-    });
+//     hero.addEventListener("mouseenter", () => {
+//         if (!isMouseActive) {
+//             stopNoiseAnimation();
+//         }
+//         isMouseActive = true;
+//         highlightState.hasPointer = false;
+//         // Clear any pending idle timeout
+//         if (mouseIdleTimeout) {
+//             clearTimeout(mouseIdleTimeout);
+//             mouseIdleTimeout = null;
+//         }
+//     });
     
-    hero.addEventListener("mousemove", (e) => {
-        stopNoiseAnimation();
-        isMouseActive = true;
-        highlightGrid(e);
+//     hero.addEventListener("mousemove", (e) => {
+//         if (!isMouseActive) {
+//             stopNoiseAnimation();
+//             isMouseActive = true;
+//         }
+//         scheduleHighlight(e);
         
-        // Reset idle timeout
-        if (mouseIdleTimeout) {
-            clearTimeout(mouseIdleTimeout);
-        }
-        mouseIdleTimeout = setTimeout(() => {
-            startNoiseAnimation();
-        }, 2000); // Start noise after 2 seconds of no mouse movement
-    });
+//         // Reset idle timeout
+//         if (mouseIdleTimeout) {
+//             clearTimeout(mouseIdleTimeout);
+//         }
+//         mouseIdleTimeout = setTimeout(() => {
+//             mouseIdleTimeout = null;
+//             startNoiseAnimation();
+//         }, 2000); // Start noise after 2 seconds of no mouse movement
+//     }, { passive: true });
     
-    hero.addEventListener("mouseleave", () => {
-        isMouseActive = false;
-        if (mouseIdleTimeout) {
-            clearTimeout(mouseIdleTimeout);
-            mouseIdleTimeout = null;
-        }
-        plusEls.forEach((plus) => {
-            plus.style.transform = "scale(1)";
-            plus.style.color = PLUS_GRID_CONFIG.color;
-            plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
-        });
-        plusStates.forEach((state) => {
-            state.scale = 1;
-            state.opacity = PLUS_GRID_CONFIG.baseOpacity;
-        });
-        // Start noise animation when mouse leaves
-        startNoiseAnimation();
-    });
+//     hero.addEventListener("mouseleave", () => {
+//         isMouseActive = false;
+//         highlightState.dirty = false;
+//         highlightState.hasPointer = false;
+//         if (mouseIdleTimeout) {
+//             clearTimeout(mouseIdleTimeout);
+//             mouseIdleTimeout = null;
+//         }
+//         plusEls.forEach((plus) => {
+//             plus.style.transform = "scale(1)";
+//             plus.style.color = PLUS_GRID_CONFIG.color;
+//             plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
+//         });
+//         plusStates.forEach((state) => {
+//             state.scale = 1;
+//             state.opacity = PLUS_GRID_CONFIG.baseOpacity;
+//         });
+//         // Start noise animation when mouse leaves
+//         startNoiseAnimation();
+//     });
     
-    // Start with noise animation
-    startNoiseAnimation();
-}
+//     // Start with noise animation
+//     startNoiseAnimation();
+// }
 
 // ===== INITIALIZATION ===== //
 document.addEventListener("DOMContentLoaded", () => {
