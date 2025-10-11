@@ -702,13 +702,6 @@ class PortfolioApp {
                     opacity: 0;
                 }
             }
-
-            @media (max-width: 768px) {
-                .slider-btn {
-                    opacity: 1 !important; /* Always visible on mobile */
-                    pointer-events: auto;
-                }
-            }
       `;
 
         if (!document.querySelector("#modal-styles")) {
@@ -775,7 +768,13 @@ class PortfolioApp {
             }
 
             function goToSlide(newIdx) {
-                if (newIdx < 0 || newIdx >= imgs.length || newIdx === idx) return;
+                if (newIdx < 0) {
+                    newIdx = 0;
+                } else if (newIdx >= imgs.length) {
+                    newIdx = imgs.length - 1;
+                }
+
+                if (newIdx === idx) return;
                 idx = newIdx;
                 updateSlider();
             }
