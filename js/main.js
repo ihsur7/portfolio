@@ -702,6 +702,13 @@ class PortfolioApp {
                     opacity: 0;
                 }
             }
+
+            @media (max-width: 768px) {
+                .slider-btn {
+                    opacity: 1 !important; /* Always visible on mobile */
+                    pointer-events: auto;
+                }
+            }
       `;
 
         if (!document.querySelector("#modal-styles")) {
