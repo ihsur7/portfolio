@@ -1135,15 +1135,31 @@ function setupPlusGridBackground() {
 
     // Configurable variables
     const PLUS_GRID_CONFIG = {
-        cellSize: 30, // px
+        cellSize: 32, // px
         color: "#2563eb",
-        baseOpacity: 0.06,
-        highlightOpacity: 0.33,
+        accentColor: "#ff6b35", // Accent color for closest plus
+    baseOpacity: 0.02,
+    highlightOpacity: 0.65,
         fontSize: 18,
         fontWeight: 700,
         letterSpacing: 1,
-        transition: "opacity 0.18s",
+        transition: "transform 0.18s ease-out, opacity 0.18s, color 0.18s ease-out",
         blendMode: "luminosity",
+        maxScale: 1.5,
+        influenceRadius: 3, // cells
+        // square symbol
+        // filled square 
+        symbol: "■",
+        // symbol: "□", // Character used for each grid element
+    // symbol: "+", // Character used for each grid element
+        // Noise animation settings
+        noiseScale: 0.5, // Scale of noise (smaller = larger patterns)
+        noiseSpeed: 0.000015, // Animation speed (slower)
+    noiseScaleAmount: 5, // Max scale deviation from the neutral scale (bidirectional)
+    noiseOpacityAmount: 0.3, // Max opacity variation from noise
+        noiseTransition: "transform 0.3s ease-out, opacity 0.3s ease-out, color 0.3s ease-out",
+        noiseSmoothing: 0.05, // Lerp factor for smoothing noise animation
+        noiseContrastPower: 1.7, // Power for shaping noise response ( >1 accentuates extremes )
     };
 
     // Create grid container
@@ -1161,12 +1177,58 @@ function setupPlusGridBackground() {
     hero.prepend(grid);
 
     let plusEls = [];
+    let plusStates = [];
     let cols = 0,
         rows = 0;
+    let isMouseActive = false;
+    let mouseIdleTimeout = null;
+    let noiseAnimationFrame = null;
+    let noiseTime = 0;
+
+    // Simple 2D noise function (Perlin-like)
+    function noise2D(x, y) {
+        // Simple pseudo-random noise based on sine
+        const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+        return n - Math.floor(n);
+    }
+
+    // Fractal noise (multiple octaves)
+    function fractalNoise(x, y, time) {
+        let value = 0;
+        let amplitude = 1;
+        let frequency = 1;
+        let maxValue = 0;
+
+        // 3 octaves of noise
+        for (let i = 0; i < 3; i++) {
+            value += amplitude * noise2D(
+                x * frequency + time * 0.5,
+                y * frequency + time * 0.3
+            );
+            maxValue += amplitude;
+            amplitude *= 0.5;
+            frequency *= 2;
+        }
+
+        return value / maxValue;
+    }
+
+    function shapeNoiseValue(value) {
+        // Clamp to [0,1] just in case
+        const clamped = Math.max(0, Math.min(1, value));
+        // Use a more aggressive contrast curve and center the output
+        const centered = (clamped - 0.5) * 2; // [-1, 1]
+        const power = Math.max(1, PLUS_GRID_CONFIG.noiseContrastPower);
+        // Use a sigmoid for more spread, then power for contrast
+        const sigmoid = centered / (1 + Math.abs(centered)); // [-1,1] but more spread
+        const shaped = Math.sign(sigmoid) * Math.pow(Math.abs(sigmoid), power);
+        return shaped * 0.5 + 0.5; // back to [0,1]
+    }
 
     function renderGrid() {
-        plusEls.forEach((el) => el.remove());
-        plusEls = [];
+    plusEls.forEach((el) => el.remove());
+    plusEls = [];
+    plusStates = [];
         const rect = hero.getBoundingClientRect();
         cols = Math.ceil(rect.width / PLUS_GRID_CONFIG.cellSize);
         rows = Math.ceil(rect.height / PLUS_GRID_CONFIG.cellSize);
@@ -1175,7 +1237,7 @@ function setupPlusGridBackground() {
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
                 const plus = document.createElement("span");
-                plus.textContent = "+";
+                plus.textContent = PLUS_GRID_CONFIG.symbol;
                 plus.style.position = "absolute";
                 plus.style.left = col * PLUS_GRID_CONFIG.cellSize + "px";
                 plus.style.top = row * PLUS_GRID_CONFIG.cellSize + "px";
@@ -1193,44 +1255,223 @@ function setupPlusGridBackground() {
                     PLUS_GRID_CONFIG.letterSpacing + "px";
                 plus.style.userSelect = "none";
                 plus.style.pointerEvents = "none";
+                plus.style.transformOrigin = "center center";
+                plus.style.transform = "scale(1)";
                 plusEls.push(plus);
+                plusStates.push({
+                    scale: 1,
+                    opacity: PLUS_GRID_CONFIG.baseOpacity,
+                });
                 grid.appendChild(plus);
             }
         }
+    }
+
+    function animateNoise() {
+        if (isMouseActive) return;
+
+        noiseTime += PLUS_GRID_CONFIG.noiseSpeed;
+
+        plusEls.forEach((plus, i) => {
+            const row = Math.floor(i / cols);
+            const col = i % cols;
+
+            // Get noise value for this position
+            const noiseValue = fractalNoise(
+                col * PLUS_GRID_CONFIG.noiseScale,
+                row * PLUS_GRID_CONFIG.noiseScale,
+                noiseTime
+            );
+
+            const contrastNoise = shapeNoiseValue(noiseValue);
+
+            // Map shaped noise (0-1) to scale and opacity
+            const scaleVariation =
+                (contrastNoise - 0.5) * 2 * PLUS_GRID_CONFIG.noiseScaleAmount;
+            const targetScale = Math.max(
+                0.2,
+                1 + scaleVariation,
+            );
+            const targetOpacity = Math.max(
+                0.2,
+                contrastNoise * PLUS_GRID_CONFIG.noiseOpacityAmount,
+            );
+            // const targetOpacity = Math.min(
+            //     1,
+            //     Math.max(
+            //         0,
+                    
+            //             contrastNoise * PLUS_GRID_CONFIG.noiseOpacityAmount,
+            //     ),
+            // );
+
+            const state = plusStates[i];
+            if (state) {
+                state.scale +=
+                    (targetScale - state.scale) *
+                    PLUS_GRID_CONFIG.noiseSmoothing;
+                state.opacity +=
+                    (targetOpacity - state.opacity) *
+                    PLUS_GRID_CONFIG.noiseSmoothing;
+            }
+
+            const appliedScale = state ? state.scale : targetScale;
+            const appliedOpacity = state ? state.opacity : targetOpacity;
+
+            plus.style.transform = `scale(${appliedScale})`;
+            plus.style.opacity = appliedOpacity;
+            plus.style.color = PLUS_GRID_CONFIG.color;
+        });
+
+        noiseAnimationFrame = requestAnimationFrame(animateNoise);
+    }
+
+    function startNoiseAnimation() {
+        if (noiseAnimationFrame) return;
+        isMouseActive = false;
+        
+        // Enable smooth transitions for noise animation
+        plusEls.forEach((plus) => {
+            plus.style.transition = PLUS_GRID_CONFIG.noiseTransition;
+        });
+        
+        animateNoise();
+    }
+
+    function stopNoiseAnimation() {
+        if (noiseAnimationFrame) {
+            cancelAnimationFrame(noiseAnimationFrame);
+            noiseAnimationFrame = null;
+        }
+        
+        // Switch to faster transitions for mouse interaction
+        plusEls.forEach((plus) => {
+            plus.style.transition = PLUS_GRID_CONFIG.transition;
+        });
     }
 
     function highlightGrid(e) {
         const rect = hero.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        let hoveredCell = null;
-        if (x >= 0 && y >= 0 && x < rect.width && y < rect.height) {
-            hoveredCell = {
-                col: Math.floor(x / PLUS_GRID_CONFIG.cellSize),
-                row: Math.floor(y / PLUS_GRID_CONFIG.cellSize),
-            };
-        }
+        
+        // Find the closest plus
+        let closestDistance = Infinity;
+        let closestIndex = -1;
+        
         plusEls.forEach((plus, i) => {
             const row = Math.floor(i / cols);
             const col = i % cols;
-            const isActive =
-                hoveredCell &&
-                Math.abs(hoveredCell.row - row) <= 1 &&
-                Math.abs(hoveredCell.col - col) <= 1;
-            plus.style.opacity = isActive
-                ? PLUS_GRID_CONFIG.highlightOpacity
-                : PLUS_GRID_CONFIG.baseOpacity;
+            
+            // Calculate the center position of this plus
+            const plusCenterX = col * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
+            const plusCenterY = row * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
+            
+            // Calculate distance from cursor to plus center
+            const dx = x - plusCenterX;
+            const dy = y - plusCenterY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        });
+        
+        // Apply scale and color to all plusses
+        plusEls.forEach((plus, i) => {
+            const row = Math.floor(i / cols);
+            const col = i % cols;
+            
+            // Calculate the center position of this plus
+            const plusCenterX = col * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
+            const plusCenterY = row * PLUS_GRID_CONFIG.cellSize + PLUS_GRID_CONFIG.cellSize / 2;
+            
+            // Calculate distance from cursor to plus center
+            const dx = x - plusCenterX;
+            const dy = y - plusCenterY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // Calculate distance in cell units
+            const cellDistance = distance / PLUS_GRID_CONFIG.cellSize;
+            
+            // Calculate scale and opacity based on distance (closer = larger scale & higher opacity)
+            let scale = 1;
+            let opacity = PLUS_GRID_CONFIG.baseOpacity;
+            
+            if (cellDistance < PLUS_GRID_CONFIG.influenceRadius) {
+                // Smooth falloff from maxScale to 1.0 over the influence radius
+                const falloff = 1 - (cellDistance / PLUS_GRID_CONFIG.influenceRadius);
+                scale = 1 + (PLUS_GRID_CONFIG.maxScale - 1) * falloff;
+                
+                // Taper opacity along with scale
+                opacity = PLUS_GRID_CONFIG.baseOpacity + 
+                         (PLUS_GRID_CONFIG.highlightOpacity - PLUS_GRID_CONFIG.baseOpacity) * falloff;
+            }
+            
+            // Apply color: accent for closest, base for others
+            const color = (i === closestIndex) ? PLUS_GRID_CONFIG.accentColor : PLUS_GRID_CONFIG.color;
+            
+            plus.style.transform = `scale(${scale})`;
+            plus.style.color = color;
+            plus.style.opacity = opacity;
+
+            const state = plusStates[i];
+            if (state) {
+                state.scale = scale;
+                state.opacity = opacity;
+            }
         });
     }
 
     renderGrid();
     window.addEventListener("resize", renderGrid);
-    hero.addEventListener("mousemove", highlightGrid);
-    hero.addEventListener("mouseleave", () => {
-        plusEls.forEach(
-            (plus) => (plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity),
-        );
+    
+    hero.addEventListener("mouseenter", () => {
+        stopNoiseAnimation();
+        isMouseActive = true;
+        // Clear any pending idle timeout
+        if (mouseIdleTimeout) {
+            clearTimeout(mouseIdleTimeout);
+            mouseIdleTimeout = null;
+        }
     });
+    
+    hero.addEventListener("mousemove", (e) => {
+        stopNoiseAnimation();
+        isMouseActive = true;
+        highlightGrid(e);
+        
+        // Reset idle timeout
+        if (mouseIdleTimeout) {
+            clearTimeout(mouseIdleTimeout);
+        }
+        mouseIdleTimeout = setTimeout(() => {
+            startNoiseAnimation();
+        }, 2000); // Start noise after 2 seconds of no mouse movement
+    });
+    
+    hero.addEventListener("mouseleave", () => {
+        isMouseActive = false;
+        if (mouseIdleTimeout) {
+            clearTimeout(mouseIdleTimeout);
+            mouseIdleTimeout = null;
+        }
+        plusEls.forEach((plus) => {
+            plus.style.transform = "scale(1)";
+            plus.style.color = PLUS_GRID_CONFIG.color;
+            plus.style.opacity = PLUS_GRID_CONFIG.baseOpacity;
+        });
+        plusStates.forEach((state) => {
+            state.scale = 1;
+            state.opacity = PLUS_GRID_CONFIG.baseOpacity;
+        });
+        // Start noise animation when mouse leaves
+        startNoiseAnimation();
+    });
+    
+    // Start with noise animation
+    startNoiseAnimation();
 }
 
 // ===== INITIALIZATION ===== //

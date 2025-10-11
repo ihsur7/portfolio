@@ -1470,6 +1470,7 @@ a {
     }
 
     .hero__grid {
+        z-index: -1;
         animation: none;
     }
 
