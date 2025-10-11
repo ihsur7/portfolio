@@ -1323,6 +1323,9 @@ a {
     .work__grid {
         grid-template-columns: 1fr;
     }
+    .work__item-visual {
+        height: 180px;
+    }
 
     .about__content {
         grid-template-columns: 1fr;
