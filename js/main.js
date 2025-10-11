@@ -1158,7 +1158,7 @@ function setupPlusGridBackground() {
     noiseScaleAmount: 5, // Max scale deviation from the neutral scale (bidirectional)
     noiseOpacityAmount: 0.3, // Max opacity variation from noise
         noiseTransition: "transform 0.3s ease-out, opacity 0.3s ease-out, color 0.3s ease-out",
-        noiseSmoothing: 0.05, // Lerp factor for smoothing noise animation
+        noiseSmoothing: 0.01, // Lerp factor for smoothing noise animation
         noiseContrastPower: 1.7, // Power for shaping noise response ( >1 accentuates extremes )
     };
 
